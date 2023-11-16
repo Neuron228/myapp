@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AccountPageActivity">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/workoutButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="#000000"
+            android:paddingLeft="35dp"
+            app:icon="@drawable/pngwing_com__1_" />
+
+        <Button
+            android:id="@+id/SearchButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="#000000"
+            android:paddingLeft="35dp"
+            app:icon="@drawable/pngwing_com__3_" />
+
+        <Button
+            android:id="@+id/HomePage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="#000000"
+            android:paddingLeft="35dp"
+            app:icon="@drawable/pngwing_com__5_" />
+
+        <Button
+            android:id="@+id/AccountPage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="#000000"
+            android:paddingLeft="35dp"
+            app:icon="@drawable/account" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/signIn"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginHorizontal="155dp"
+        android:layout_marginVertical="380dp"
+        android:backgroundTint="#000000"
+        android:text="Sign in"
+        android:textSize="13dp" />
+    <Button
+        android:id="@+id/signUp"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginHorizontal="155dp"
+        android:layout_marginVertical="420dp"
+        android:backgroundTint="#000000"
+        android:text="Sign up"
+        android:textSize="13dp" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginHorizontal="155dp"
+        android:layout_marginVertical="250dp"
+        app:srcCompat="@drawable/pngwing_com__7_" />
+
+
+</RelativeLayout>

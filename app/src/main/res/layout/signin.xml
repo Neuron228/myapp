@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AccountPageActivity">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/workoutButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="#000000"
+            android:paddingLeft="35dp"
+            app:icon="@drawable/pngwing_com__1_" />
+
+        <Button
+            android:id="@+id/SearchButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="#000000"
+            android:paddingLeft="35dp"
+            app:icon="@drawable/pngwing_com__3_" />
+
+        <Button
+            android:id="@+id/HomePage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="#000000"
+            android:paddingLeft="35dp"
+            app:icon="@drawable/pngwing_com__5_" />
+
+        <Button
+            android:id="@+id/AccountPage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="#000000"
+            android:paddingLeft="35dp"
+            app:icon="@drawable/account" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/signIn"
+        android:layout_width="140dp"
+        android:layout_height="60dp"
+        android:text="Sign In"
+        android:textSize="20dp"
+        android:layout_marginTop="400dp"
+        android:layout_marginLeft="138dp" />
+
+    <EditText
+        android:id="@+id/signInEmail"
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="190dp"
+        android:layout_marginLeft="10dp"
+        android:paddingTop="0dp"
+        android:hint="Email:"
+        android:textSize="25dp"/>
+
+    <EditText
+        android:id="@+id/signInPassword"
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="260dp"
+        android:layout_marginLeft="10dp"
+        android:paddingTop="0dp"
+        android:hint="Password:"
+        android:textSize="25dp"/>
+
+
+</RelativeLayout>

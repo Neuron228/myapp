@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="90dp">
+
+    <EditText
+        android:id="@+id/nameView1"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:hint="@string/name_exercise"
+        android:minHeight="48dp"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/time"
+        android:layout_width="83dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginLeft="250dp"
+        android:hint="@string/Time"
+        android:textSize="18sp" />
+
+    <RadioGroup
+        android:id="@+id/typeTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/radio_sec"
+            android:layout_width="75dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="335dp"
+            android:text="sec" />
+
+        <RadioButton
+            android:id="@+id/radio_min"
+            android:layout_marginTop="10dp"
+            android:layout_width="75dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="335dp"
+            android:text="min" />
+    </RadioGroup>
+
+
+
+
+</RelativeLayout>

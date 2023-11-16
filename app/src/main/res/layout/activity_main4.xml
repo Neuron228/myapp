@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity4">
+
+    <TextView
+        android:id="@+id/nameWorkout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="200dp"
+        android:ems="20"
+        android:hint="@string/name_workout"
+        android:minHeight="48dp"
+        android:paddingTop="10dp"
+        android:textAlignment="textStart"
+        android:textSize="20sp"
+        tools:layout_editor_absoluteX="153dp"
+        tools:layout_editor_absoluteY="128dp" />
+
+    <Button
+        android:id="@+id/start"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="280dp"
+        android:layout_marginTop="40dp"
+        android:backgroundTint="#000000"
+        android:text="@string/start"
+        android:textSize="18sp" />
+
+    <ListView
+        android:id="@+id/WorkoutList2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/nameWorkout"
+       />
+
+    <Button
+        android:id="@+id/change"
+        android:layout_width="96dp"
+        android:layout_height="70dp"
+        android:layout_marginLeft="300dp"
+        android:layout_marginTop="610dp"
+        android:backgroundTint="#000000"
+        android:text="Change" />
+
+    <Button
+        android:id="@+id/BackButton4"
+        android:layout_width="30dp"
+        android:layout_height="40dp"
+        android:backgroundTint="#FFFFFF"
+        android:paddingHorizontal="0dp"
+        android:textSize="14dp"
+        app:icon="?attr/homeAsUpIndicator"
+        app:iconTint="#000000" />
+       />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/workoutButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="#000000"
+            android:paddingLeft="35dp"
+            app:icon="@drawable/pngwing_com__1_" />
+
+        <Button
+            android:id="@+id/SearchButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="#000000"
+            android:paddingLeft="35dp"
+            app:icon="@drawable/pngwing_com__3_" />
+
+        <Button
+            android:id="@+id/HomePage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="#000000"
+            android:paddingLeft="35dp"
+            app:icon="@drawable/pngwing_com__5_" />
+
+        <Button
+            android:id="@+id/AccountPage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="#000000"
+            android:paddingLeft="35dp"
+            app:icon="@drawable/account" />
+    </LinearLayout>
+</RelativeLayout>

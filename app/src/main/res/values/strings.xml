@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Training App</string>
+    <string name="first_name">My Workouts</string>
+    <string name="new_workout">New Workout</string>
+    <string name="save">Save</string>
+    <string name="name">Name</string>
+    <string name="name_exercise">Name Exercise:</string>
+    <string name="name_workout">Name Workout:</string>
+    <string name="start">Start</string>
+    <string name="back">Back</string>
+    <string name="done">DONE</string>
+    <string name="RestTime">Rest Time:</string>
+    <string name="Time">Time:</string>
+    <string name="UserName">User name:</string>
+
+</resources>

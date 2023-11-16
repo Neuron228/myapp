@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity3">
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="200dp"
+        android:ems="20"
+        android:hint="@string/name"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        tools:layout_editor_absoluteX="153dp"
+        tools:layout_editor_absoluteY="128dp" />
+
+    <Button
+        android:id="@+id/Button3"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="280dp"
+        android:layout_marginTop="40dp"
+        android:backgroundTint="#000000"
+        android:text="@string/save"
+        android:textSize="20sp" />
+
+    <ListView
+        android:id="@+id/WorkoutList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/editText"/>
+
+    <Button
+        android:id="@+id/AddButton2"
+        android:layout_width="90dp"
+        android:layout_height="55dp"
+        android:layout_marginLeft="300dp"
+        android:layout_marginTop="600dp"
+        android:backgroundTint="#000000"
+        android:paddingHorizontal="0dp"
+        android:paddingVertical="0dp"
+        android:text="Add usual exercise"
+        android:textSize="12dp" />
+
+    <Button
+        android:id="@+id/AddButtonTime"
+        android:layout_width="90dp"
+        android:layout_height="55dp"
+        android:layout_marginLeft="300dp"
+        android:layout_marginTop="550dp"
+        android:backgroundTint="#000000"
+        android:paddingHorizontal="0dp"
+        android:paddingVertical="0dp"
+        android:text="Add time exercise/rest time"
+        android:textSize="11dp" />
+    <Button
+        android:id="@+id/BackButton3"
+        android:layout_width="30dp"
+        android:layout_height="40dp"
+        android:backgroundTint="#FFFFFF"
+        android:paddingHorizontal="0dp"
+        android:textSize="14dp"
+        app:icon="?attr/homeAsUpIndicator"
+        app:iconTint="#000000" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/workoutButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="#000000"
+            android:paddingLeft="35dp"
+            app:icon="@drawable/pngwing_com__1_" />
+
+        <Button
+            android:id="@+id/SearchButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="#000000"
+            android:paddingLeft="35dp"
+            app:icon="@drawable/pngwing_com__3_" />
+
+        <Button
+            android:id="@+id/HomePage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="#000000"
+            android:paddingLeft="35dp"
+            app:icon="@drawable/pngwing_com__5_" />
+
+        <Button
+            android:id="@+id/AccountPage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="#000000"
+            android:paddingLeft="35dp"
+            app:icon="@drawable/account" />
+    </LinearLayout>
+
+</RelativeLayout>
