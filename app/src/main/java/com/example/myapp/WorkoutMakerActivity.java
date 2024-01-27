@@ -2,6 +2,7 @@ package com.example.myapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,12 +14,12 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 
-public class MainActivity3 extends AppCompatActivity {
+public class WorkoutMakerActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main3);
+        setContentView(R.layout.workout_maker);
 
         EditText editText = findViewById(R.id.editText);
         Button button3 = findViewById(R.id.Button3);
@@ -30,13 +31,7 @@ public class MainActivity3 extends AppCompatActivity {
         BackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    Intent intent = new Intent(MainActivity3.this,MainActivity2.class);
-                    startActivity(intent);
-                    WorkoutAdapter.exercises.clear();
-                    finish();
-                }catch(Exception e){
-                }
+                onBackPressed();
             }
         });
         WorkoutList.setItemsCanFocus(true);
@@ -78,11 +73,13 @@ public class MainActivity3 extends AppCompatActivity {
                     }
                     num++;
                 }
-                Intent intent2 = new Intent(".MainActivity2");
-                intent2.putExtra("Workout",workoutList);
-                intent2.putExtra("name", name);
-                startActivity(intent2);
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("Workout",workoutList);
+                returnIntent.putExtra("name", name);
+                setResult(Activity.RESULT_OK,returnIntent);
                 WorkoutAdapter.exercises.clear();
+                finish();
+
             }
         });
 

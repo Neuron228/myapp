@@ -6,48 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".AccountPageActivity">
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
-
-        <Button
-            android:id="@+id/workoutButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="#000000"
-            android:paddingLeft="35dp"
-            app:icon="@drawable/pngwing_com__1_" />
-
-        <Button
-            android:id="@+id/SearchButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="#000000"
-            android:paddingLeft="35dp"
-            app:icon="@drawable/pngwing_com__3_" />
-
-        <Button
-            android:id="@+id/HomePage"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="#000000"
-            android:paddingLeft="35dp"
-            app:icon="@drawable/pngwing_com__5_" />
-
-        <Button
-            android:id="@+id/AccountPage"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="#000000"
-            android:paddingLeft="35dp"
-            app:icon="@drawable/account" />
-    </LinearLayout>
 
     <Button
         android:id="@+id/signIn"

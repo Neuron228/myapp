@@ -33,10 +33,7 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signin);
 
-        Button workoutButton = findViewById(R.id.workoutButton);
-        Button SearchButton = findViewById(R.id.SearchButton);
-        Button HomePage = findViewById(R.id.HomePage);
-        Button AccountPage = findViewById(R.id.AccountPage);
+
         Button SignInButton = findViewById(R.id.signIn);
 
         EditText Email = findViewById(R.id.signInEmail);
@@ -57,34 +54,7 @@ public class SignInActivity extends AppCompatActivity {
 
             }
         });
-        workoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(".MainActivity2");
-                startActivity(intent);
-            }
-        });
-        SearchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(".MainActivity2");
-                startActivity(intent);
-            }
-        });
-        HomePage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(".MainActivity2");
-                startActivity(intent);
-            }
-        });
-        AccountPage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(".AccountPageActivity");
-                startActivity(intent);
-            }
-        });
+
     }
 
     public void signInUser(String email, String password) {
@@ -108,7 +78,7 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     public void updateUI(FirebaseUser currentUser){
-        Intent profileIntent = new Intent(this, ProfileActivity.class);
+        Intent profileIntent = new Intent(this, MainActivity.class);
         profileIntent.putExtra("email",currentUser.getEmail());
         startActivity(profileIntent);
     }

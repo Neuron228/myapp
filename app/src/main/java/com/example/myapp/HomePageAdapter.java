@@ -34,7 +34,7 @@ public class HomePageAdapter extends BaseAdapter {
         final ViewHolder3 viewHolder;
 
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.list_item4, parent, false);
+            convertView = inflater.inflate(R.layout.publication, parent, false);
             viewHolder = new ViewHolder3(convertView);
             convertView.setTag(viewHolder);
         } else {

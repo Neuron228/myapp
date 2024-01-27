@@ -2,7 +2,6 @@ package com.example.myapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,12 +10,12 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class MainActivity4 extends AppCompatActivity {
+public class CreatedWorkoutActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main4);
+        setContentView(R.layout.ready_workout);
 
         Bundle arguments = getIntent().getExtras();
         TextView nameWorkout = findViewById(R.id.nameWorkout);
@@ -25,8 +24,8 @@ public class MainActivity4 extends AppCompatActivity {
         Button BackButton = findViewById(R.id.BackButton4);
         Button StartButton = findViewById(R.id.start);
 
-        nameWorkout.setText(MainActivity2.list.get(Position));
-        ArrayList<Workout> workout = MainActivity2.AllWorkoutsList.get(Position);
+        nameWorkout.setText(WorkoutFragment.list.get(Position));
+        ArrayList<Workout> workout = WorkoutFragment.AllWorkoutsList.get(Position);
         WorkoutList.setItemsCanFocus(true);
         WorkoutAdapter2 adapter2 = new WorkoutAdapter2(this,workout);
         WorkoutList.setAdapter(adapter2);
@@ -35,12 +34,7 @@ public class MainActivity4 extends AppCompatActivity {
         BackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              try {
-                  Intent intent = new Intent(MainActivity4.this,MainActivity2.class);
-                  startActivity(intent);
-                  finish();
-              }catch(Exception e){
-              }
+              onBackPressed();
             }
             });
 

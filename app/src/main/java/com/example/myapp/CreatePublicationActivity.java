@@ -1,5 +1,6 @@
 package com.example.myapp;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -46,8 +47,9 @@ public class CreatePublicationActivity extends AppCompatActivity {
                 mDatabase.child(Nickname).child("publications").child("publication" + NumOfPublications).setValue(text);
                 newNum.put("numOfPublications",NumOfPublications+1);
                 mDatabase.child(Nickname).updateChildren(newNum);
-                Intent intent = new Intent(".ProfileActivity");
-                startActivity(intent);
+                Intent returnIntent = new Intent();
+                setResult(Activity.RESULT_OK,returnIntent);
+                finish();
             }
         });
     }

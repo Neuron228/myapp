@@ -17,11 +17,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
@@ -45,10 +44,7 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signup);
 
-        Button workoutButton = findViewById(R.id.workoutButton);
-        Button SearchButton = findViewById(R.id.SearchButton);
-        Button HomePage = findViewById(R.id.HomePage);
-        Button AccountPage = findViewById(R.id.AccountPage);
+
 
         EditText LastName = findViewById(R.id.signupLastName);
         EditText Email = findViewById(R.id.signupEmail);
@@ -74,6 +70,7 @@ public class SignUpActivity extends AppCompatActivity {
                 String PasswordText = Password.getText().toString();
 
 
+
                 if(FirstNameText.equals("") || LastNameText.equals("") || EmailText.equals("") || PasswordText.equals("") || NickNameText.equals((""))){
                     Toast.makeText(getApplicationContext(),"One of the fields is not filled!",Toast.LENGTH_SHORT).show();
                 }
@@ -82,34 +79,6 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-        workoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(".MainActivity2");
-                startActivity(intent);
-            }
-        });
-        SearchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(".MainActivity2");
-                startActivity(intent);
-            }
-        });
-        HomePage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(".MainActivity2");
-                startActivity(intent);
-            }
-        });
-        AccountPage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(".AccountPageActivity");
-                startActivity(intent);
-            }
-        });
 
 
     }
@@ -135,6 +104,8 @@ public class SignUpActivity extends AppCompatActivity {
 
     public void updateUI(FirebaseUser currentUser){
         mDatabase.child(user.getNickname()).setValue(user);
+        mDatabase.child(user.getNickname()).child("UID").setValue(FirebaseAuth.getInstance().getUid());
+        user.setUid(FirebaseAuth.getInstance().getUid());
         Intent loginIntent = new Intent(this, SignInActivity.class);
         startActivity(loginIntent);
     }

@@ -42,7 +42,7 @@ public class AccountPageActivity extends AppCompatActivity {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null) {
-            Intent profileIntent = new Intent(this, ProfileActivity.class);
+            Intent profileIntent = new Intent(this, MainActivity.class);
             profileIntent.putExtra("email",currentUser.getEmail());
             startActivity(profileIntent);
         }

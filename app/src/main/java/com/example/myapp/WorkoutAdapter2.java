@@ -34,7 +34,7 @@ public class WorkoutAdapter2 extends BaseAdapter {
                 case 1:
                     final ViewHolder2 viewHolder;
                     if (convertView == null) {
-                        convertView = inflater.inflate(R.layout.list_item2, parent, false);
+                        convertView = inflater.inflate(R.layout.ready_exercise_reps, parent, false);
                         viewHolder = new ViewHolder2(convertView);
                         convertView.setTag(viewHolder);
                     } else {
@@ -50,7 +50,7 @@ public class WorkoutAdapter2 extends BaseAdapter {
                 case 2:
                     final ViewHolder2 viewHolder1;
                     if (convertView == null) {
-                        convertView = inflater.inflate(R.layout.list_item3, parent, false);
+                        convertView = inflater.inflate(R.layout.ready_exercise_time, parent, false);
                         viewHolder1 = new ViewHolder2(convertView);
                         convertView.setTag(viewHolder1);
                     } else {

@@ -24,15 +24,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ProfileActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name=".ProfileActivity" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name=".SignInActivity"
             android:exported="true">
             <intent-filter>
@@ -54,46 +45,33 @@
             android:name=".AccountPageActivity"
             android:exported="true">
             <intent-filter>
-                <action android:name=".AccountPageActivity" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".MainActivity4"
-            android:exported="false">
-            <intent-filter>
-                <action android:name=".MainActivity4" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".MainActivity3"
-            android:exported="true">
-            <intent-filter>
-                <action android:name=".MainActivity3" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".MainActivity2"
-            android:exported="true">
-            <intent-filter>
-                <action android:name=".MainActivity2" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
-            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".CreatedWorkoutActivity"
+            android:exported="false">
+            <intent-filter>
+                <action android:name=".CreatedWorkoutActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".WorkoutMakerActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name=".WorkoutMakerActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="false">
         </activity>
     </application>
 

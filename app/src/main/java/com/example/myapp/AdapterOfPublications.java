@@ -33,7 +33,7 @@ public class AdapterOfPublications extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         final ViewHolder4 viewHolder;
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.list_item4, parent, false);
+            convertView = inflater.inflate(R.layout.publication, parent, false);
             viewHolder = new ViewHolder4(convertView);
             convertView.setTag(viewHolder);
         } else {

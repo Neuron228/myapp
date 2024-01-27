@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import java.util.ArrayList;
@@ -37,7 +36,7 @@ public class WorkoutAdapter extends BaseAdapter {
                 ViewHolder holder;
                 if (convertView == null) {
                     holder = new ViewHolder();
-                    convertView = mInflater.inflate(R.layout.list_item, parent, false);
+                    convertView = mInflater.inflate(R.layout.exercise_reps, parent, false);
                     holder.nameView = convertView.findViewById(R.id.nameView);
                     holder.sets = convertView.findViewById(R.id.sets);
                     holder.reps = convertView.findViewById(R.id.reps);
@@ -93,7 +92,7 @@ public class WorkoutAdapter extends BaseAdapter {
                 ViewHolder holder1;
                 if (convertView == null) {
                     holder1 = new ViewHolder();
-                    convertView = mInflater.inflate(R.layout.list_item1, parent, false);
+                    convertView = mInflater.inflate(R.layout.exercise_time, parent, false);
                     holder1.nameView1 = convertView.findViewById(R.id.nameView1);
                     holder1.time = convertView.findViewById(R.id.time);
                     holder1.typeTime = convertView.findViewById(R.id.typeTime);

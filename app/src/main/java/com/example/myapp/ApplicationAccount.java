@@ -10,6 +10,8 @@ public class ApplicationAccount {
      private String Email;
      private String Password;
      private String Nickname;
+
+     private String uid;
      private int NumOfPublications;
 
      public ApplicationAccount(String Email,String Password){
@@ -17,6 +19,14 @@ public class ApplicationAccount {
           this.Password = Password;
           this.NumOfPublications = 0;
      }
+     public ApplicationAccount(String FirstName, String LastName,String Nickname,String uid){
+          this.FirstName = FirstName;
+          this.LastName =LastName;
+          this.Nickname = Nickname;
+          this.uid = uid;
+
+     }
+
      public ApplicationAccount(String FirstName, String LastName, String Email, String Password,String Nickname ){
           this.FirstName = FirstName;
           this.LastName =LastName;
@@ -24,6 +34,15 @@ public class ApplicationAccount {
           this.Password = Password;
           this.Nickname = Nickname;
           this.NumOfPublications = 0;
+
+     }
+
+     public String getUid() {
+          return uid;
+     }
+
+     public void setUid(String uid) {
+          this.uid = uid;
      }
 
      public int getNumOfPublications() {

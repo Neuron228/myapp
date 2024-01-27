@@ -3,7 +3,7 @@ package com.example.myapp;
 import java.io.Serializable;
 
 public class Workout implements Serializable {
-
+    //private int type;   //0-1
     private String name;
     private int resttime;
     private int repetitions;

@@ -4,15 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileActivity">
+    tools:context=".ProfileFragment">
 
     <ListView
         android:id="@+id/YourPublications"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="50dp"
         android:layout_marginTop="222dp"
-       />
+        />
     <TextView
         android:id="@+id/Profile"
         android:layout_width="170dp"
@@ -49,12 +48,4 @@
         android:layout_marginLeft="190dp"
         android:text="New publication" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/YourPublications"
-        android:layout_alignParentBottom="true"
-        app:menu="@menu/bottom_menu_navigation"
-        android:layout_gravity="bottom"/>
 </FrameLayout>
