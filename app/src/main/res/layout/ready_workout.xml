@@ -15,6 +15,7 @@
         android:layout_marginRight="200dp"
         android:ems="20"
         android:hint="@string/name_workout"
+        android:textColor="@color/rose"
         android:minHeight="48dp"
         android:paddingTop="10dp"
         android:textAlignment="textStart"
@@ -29,6 +30,8 @@
         android:layout_marginLeft="280dp"
         android:layout_marginTop="40dp"
         android:backgroundTint="#000000"
+        android:textColor="@color/rose"
+
         android:text="@string/start"
         android:textSize="18sp" />
 
@@ -44,6 +47,7 @@
         android:layout_width="96dp"
         android:layout_height="70dp"
         android:layout_marginLeft="300dp"
+        android:textColor="@color/rose"
         android:layout_marginTop="650dp"
         android:backgroundTint="#000000"
         android:text="Change" />

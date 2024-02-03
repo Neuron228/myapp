@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,6 +34,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -51,11 +53,17 @@ public class SearchFragment extends Fragment {
     private String mParam2;
     EditText searchInput;
     ImageButton searchButton;
+    ListView PublicationsList;
     ListView listView;
     FirebaseDatabase database;
     DatabaseReference mDatabase;
 
-    ArrayList<ApplicationAccount> UsersList = new ArrayList<>();
+    AdapterOfPublications adapter1;
+    public ArrayList<ApplicationAccount> UsersList = new ArrayList<>();
+    ArrayList<ApplicationAccount> UsersList1;
+
+    boolean userList1Activated = false;
+    public int PositionOfSelectedItem;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -104,8 +112,10 @@ public class SearchFragment extends Fragment {
                     if (!account.getUid().equals(fUser.getUid())) {
                         UsersList.add(account);
                     }
-                    SearchUserRecyclerAdapter adapter = new SearchUserRecyclerAdapter(getContext(), UsersList);
-                    listView.setAdapter(adapter);
+                    if (getActivity() != null) {
+                        SearchUserRecyclerAdapter adapter = new SearchUserRecyclerAdapter(getActivity(), UsersList);
+                        listView.setAdapter(adapter);
+                    }
                 }
             }
             @Override
@@ -130,12 +140,20 @@ public class SearchFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String UidOfUserSelected = UsersList.get(position).getUid();
+
+                if(userList1Activated){
+                    UidOfUserSelected =UsersList1.get(position).getUid();
+                }
+                AnotherProfileFragment f = new AnotherProfileFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("UID",UidOfUserSelected);
+                f.setArguments(bundle);
+
                 FragmentTransaction fragmentTransaction = getActivity()
                         .getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.frame_layout, new AnotherProfileFragment());
+                fragmentTransaction.replace(R.id.frame_layout, f);
                 fragmentTransaction.commit();
-
-
             }
         });
 
@@ -144,7 +162,8 @@ public class SearchFragment extends Fragment {
 
 
     private void SearchPeopleAndFriends(String searchBoxInput) {
-        ArrayList<ApplicationAccount> UsersList1 = new ArrayList<>();
+        UsersList1 = new ArrayList<>();
+        userList1Activated = false;
         for(int i=0;i<UsersList.size();i++){
             ApplicationAccount user = UsersList.get(i);
             if(user.getNickname().startsWith(searchBoxInput) || user.getLastName().startsWith(searchBoxInput)||user.getFirstName().startsWith(searchBoxInput)){
@@ -154,7 +173,9 @@ public class SearchFragment extends Fragment {
             if(UsersList1.size() ==0){
                 searchInput.setError("User is not found");
             }
+
         SearchUserRecyclerAdapter adapter = new SearchUserRecyclerAdapter(getContext(), UsersList1);
+        userList1Activated =true;
         listView.setAdapter(adapter);
 
     }

@@ -21,6 +21,8 @@ public class SearchUserRecyclerAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     ArrayList<ApplicationAccount> UsersList;
 
+
+
     public SearchUserRecyclerAdapter(Context context, ArrayList<ApplicationAccount> UsersList) {
         this.inflater = LayoutInflater.from(context);
         this.UsersList = UsersList;

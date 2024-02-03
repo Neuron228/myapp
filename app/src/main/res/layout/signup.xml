@@ -58,6 +58,7 @@
         android:layout_width="190dp"
         android:layout_height="60dp"
         android:text="Create Account"
+        android:textColor="@color/rose"
         android:layout_marginTop="400dp"
         android:layout_marginLeft="112dp"/>
 

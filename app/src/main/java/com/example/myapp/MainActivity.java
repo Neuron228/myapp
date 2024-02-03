@@ -3,12 +3,14 @@ package com.example.myapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.ListView;
 
@@ -22,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class MainActivity extends FragmentActivity {
     //todo - intro screen (splash-screen)
@@ -34,11 +37,17 @@ public class MainActivity extends FragmentActivity {
     static int NumOfPublications;
     public static ArrayList<String> publications = new ArrayList<String>();
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.rose));
+
+
 
         binding.bottomNavigation.setOnItemSelectedListener(item -> {
             switch (item.getItemId()){
@@ -67,6 +76,7 @@ public class MainActivity extends FragmentActivity {
         Intent intent = getIntent();
         email = intent.getStringExtra("email");
         //бубен уебище блять
+        //omg facts - pgltsmn
 
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
@@ -88,6 +98,7 @@ public class MainActivity extends FragmentActivity {
 
                     }
                 }
+                Collections.reverse(publications);
             }
 
             @Override

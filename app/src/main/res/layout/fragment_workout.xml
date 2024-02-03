@@ -14,7 +14,8 @@
         android:text="@string/first_name"
         android:textAlignment="center"
         android:textSize="34sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textColor="@color/rose"/>
 
     <ListView
         android:id="@+id/ListView"

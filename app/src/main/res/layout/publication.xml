@@ -8,6 +8,8 @@
         android:layout_width="160dp"
         android:layout_height="30dp"
         android:hint="@string/UserName"
+        android:textColor="@color/rose"
+
         android:minHeight="48dp"
         android:textSize="18sp"
         android:layout_marginTop="10dp"
@@ -15,6 +17,8 @@
     <TextView
         android:id="@+id/messagePublication"
         android:layout_width="match_parent"
+        android:textColor="@color/rose"
+
         android:layout_height="100dp"
         android:hint="Text Message:"
         android:minHeight="48dp"
@@ -25,6 +29,8 @@
     <TextView
         android:id="@+id/datetime"
         android:layout_width="100dp"
+        android:textColor="@color/rose"
+
         android:layout_height="30dp"
         android:layout_marginLeft="290dp"
         android:layout_marginTop="10dp"

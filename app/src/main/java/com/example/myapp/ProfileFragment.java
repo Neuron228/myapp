@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,7 +47,6 @@ public class ProfileFragment extends Fragment {
     private String mParam2;
     ListView PublicationsList;
     int LAUNCH_SECOND_ACTIVITY = 1;
-    Button CreatePublicaton;
     AdapterOfPublications adapter1;
 
     public ProfileFragment() {
@@ -84,7 +84,7 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container,false);
-        CreatePublicaton = view.findViewById(R.id.CreatePublication);
+
 
 
         PublicationsList = view.findViewById(R.id.YourPublications);
@@ -95,8 +95,7 @@ public class ProfileFragment extends Fragment {
 
         DisplayName.setText(MainActivity.name);
 
-        Collections.reverse(MainActivity.publications);
-        adapter1 = new AdapterOfPublications(getContext(), MainActivity.publications, MainActivity.Nickname);
+        adapter1 = new AdapterOfPublications(getActivity(), MainActivity.publications, MainActivity.Nickname);
         PublicationsList.setAdapter(adapter1);
         adapter1.notifyDataSetChanged();
 
@@ -107,9 +106,11 @@ public class ProfileFragment extends Fragment {
                 Intent intent = new Intent(".CreatePublicationActivity");
                 MainActivity.publications.clear();
                 adapter1.notifyDataSetChanged();
-                intent.putExtra("nick",MainActivity.Nickname);
-                intent.putExtra("num", MainActivity.NumOfPublications);
-                startActivityForResult(intent,1);
+
+                FragmentTransaction fragmentTransaction = getActivity()
+                        .getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.frame_layout, new CreatePublicationFragment());
+                fragmentTransaction.commit();
             }
         });
         return view;
@@ -120,7 +121,7 @@ public class ProfileFragment extends Fragment {
 
         if (requestCode == LAUNCH_SECOND_ACTIVITY) {
             if(resultCode == Activity.RESULT_OK){
-                Collections.reverse(MainActivity.publications);
+
                 adapter1.notifyDataSetChanged();
             }
             if (resultCode == Activity.RESULT_CANCELED) {
