@@ -18,6 +18,12 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +34,7 @@ import java.util.List;
  */
 public class WorkoutFragment extends Fragment {
 
-    private Button AddButton1;
+    private FloatingActionButton AddButton1;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -38,6 +44,10 @@ public class WorkoutFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    FirebaseDatabase database;
+    DatabaseReference mDatabase;
+    ArrayAdapter<String> adapter;
     public static ArrayList<String> list = new ArrayList<String>();
     public static ArrayList<Workout> workout = new ArrayList<Workout>();
     public static ArrayList<ArrayList<Workout>> AllWorkoutsList = new ArrayList<ArrayList<Workout>>();
@@ -84,6 +94,11 @@ public class WorkoutFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_workout, container,false);
         AddButton1 = view.findViewById(R.id.AddButton1);
         ListView = view.findViewById(R.id.ListView);
+
+        database = FirebaseDatabase.getInstance();
+        mDatabase = database.getReference("Workouts");
+
+
         AddButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,7 +118,7 @@ public class WorkoutFragment extends Fragment {
 
         List<String> items = list;
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1,items);
+        adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1,MainActivity.list);
         ListView.setAdapter(adapter);
 
 
@@ -113,19 +128,17 @@ public class WorkoutFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == LAUNCH_SECOND_ACTIVITY) {
-            if(resultCode == Activity.RESULT_OK){
-                workout = (ArrayList<Workout>)data.getSerializableExtra("Workout");
-                String name = data.getStringExtra("name");
-                list.add(name);
-                List<String> items = list;
+        if (resultCode != Activity.RESULT_CANCELED) {
+            if(requestCode == LAUNCH_SECOND_ACTIVITY) {
+                if (data != null) {
+                    String st = data.getStringExtra("name");
+                    System.out.println("SOSI");
+                    adapter.notifyDataSetChanged();
 
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1,items);
-                ListView.setAdapter(adapter);
-                AllWorkoutsList.add(workout);
+                }
             }
             if (resultCode == Activity.RESULT_CANCELED) {
-                // Write your code if there's no result
+
             }
         }
     }

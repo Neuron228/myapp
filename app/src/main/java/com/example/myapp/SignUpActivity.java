@@ -105,6 +105,7 @@ public class SignUpActivity extends AppCompatActivity {
     public void updateUI(FirebaseUser currentUser){
         mDatabase.child(user.getNickname()).setValue(user);
         mDatabase.child(user.getNickname()).child("UID").setValue(FirebaseAuth.getInstance().getUid());
+        mDatabase.child(user.getNickname()).child("NumOfWorkouts").setValue(0);
         user.setUid(FirebaseAuth.getInstance().getUid());
         Intent loginIntent = new Intent(this, SignInActivity.class);
         startActivity(loginIntent);

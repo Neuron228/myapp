@@ -19,6 +19,7 @@
         android:layout_marginLeft="160dp"
         android:layout_marginTop="10dp"
         android:text="Profile"
+        android:textColor="@color/beige"
         android:textSize="30dp"
         tools:layout_editor_absoluteX="153dp"
         tools:layout_editor_absoluteY="117dp" />
@@ -27,7 +28,8 @@
         android:layout_width="170dp"
         android:layout_height="35dp"
         android:layout_marginLeft="190dp"
-        android:layout_marginTop="110dp"
+        android:layout_marginTop="80dp"
+        android:textColor="@color/beige"
         android:text=""
         android:textSize="25dp"
         tools:layout_editor_absoluteX="153dp"
@@ -35,17 +37,20 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_marginTop="50dp"
         android:layout_width="165dp"
-        android:layout_height="175dp"
+        android:layout_height="166dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/edit_text_rounded_corner"
         tools:srcCompat="@tools:sample/avatars" />
 
     <Button
         android:id="@+id/CreatePublication"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="170dp"
+        android:layout_height="40dp"
         android:layout_marginLeft="190dp"
+        android:layout_marginTop="170dp"
+
+        android:background="@drawable/edit_text_rounded_corner"
         android:text="New publication" />
 
 </FrameLayout>

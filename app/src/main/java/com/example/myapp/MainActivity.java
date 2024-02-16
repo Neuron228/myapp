@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.widget.ListView;
 
 import com.example.myapp.databinding.ActivityMainBinding;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -25,17 +26,27 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 
 public class MainActivity extends FragmentActivity {
     //todo - intro screen (splash-screen)
     ActivityMainBinding binding;
     FirebaseDatabase database;
     DatabaseReference mDatabase;
+    DatabaseReference mDatabaseW;
     static String email;
     static String Nickname;
     static String name;
+    public static FirebaseUser user ;
     static int NumOfPublications;
+    static ArrayList<String> items = new ArrayList<>();
+
+    static int NumOfWorkouts;
+
+    static long NumOfWorkoutsALl;
     public static ArrayList<String> publications = new ArrayList<String>();
+    public static ArrayList<String> list = new ArrayList<String>();
 
 
 
@@ -45,7 +56,8 @@ public class MainActivity extends FragmentActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.rose));
+
+
 
 
 
@@ -70,8 +82,10 @@ public class MainActivity extends FragmentActivity {
         });
         database = FirebaseDatabase.getInstance();
         mDatabase = database.getReference("User");
+        mDatabaseW = database.getReference("Workouts");
+        user = FirebaseAuth.getInstance().getCurrentUser();
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
 
         Intent intent = getIntent();
         email = intent.getStringExtra("email");
@@ -86,6 +100,7 @@ public class MainActivity extends FragmentActivity {
                         int n =0;
                         name = ds.child("firstName").getValue(String.class) +" "+ ds.child("lastName").getValue(String.class);
                         NumOfPublications = ds.child("numOfPublications").getValue(Integer.class);
+                        NumOfWorkouts = ds.child("NumOfWorkouts").getValue(Integer.class);
                         publications.clear();
                         while (n < NumOfPublications && publications.size() != NumOfPublications+1) {
                             if(ds.child("publications").child("publication" + String.valueOf(n)).getValue(String.class) != null) {
@@ -107,15 +122,30 @@ public class MainActivity extends FragmentActivity {
             }
         });
 
+        mDatabaseW.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                NumOfWorkoutsALl = snapshot.getChildrenCount();
+                list.clear();
+                for (DataSnapshot ds : snapshot.getChildren()) {
 
-        ListView HomeList = findViewById(R.id.ListViewHome);
-        ArrayList<Publication> publici = new ArrayList<>();
+                    if (ds.child("UIDofCreator").getValue(String.class).equals(user.getUid())) {
+                            String name = ds.child("Name").getValue(String.class);
+                            System.out.println(name);
+                            list.add(name);
 
-        HomeList.setItemsCanFocus(true);
 
-        //люблю тебя Левочка  :-)
-        HomePageAdapter adapter = new HomePageAdapter(this,publici);
-        HomeList.setAdapter(adapter);
+                    }
+
+                }
+                Collections.reverse(list);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 
 
@@ -128,4 +158,5 @@ public class MainActivity extends FragmentActivity {
         fragmentTransaction.replace(R.id.frame_layout, fragment);
         fragmentTransaction.commit();
     }
+
 }

@@ -11,10 +11,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 
 
 public class WorkoutMakerActivity extends AppCompatActivity {
+    FirebaseDatabase database;
+    DatabaseReference mDatabase;
+
+    DatabaseReference mDatabaseW;
+
+    String Nickname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +38,14 @@ public class WorkoutMakerActivity extends AppCompatActivity {
         ListView WorkoutList = findViewById(R.id.WorkoutList);
         Button BackButton = findViewById(R.id.BackButton3);
         Button AddButtonTime = findViewById(R.id.AddButtonTime);
+
+
+        Nickname = MainActivity.Nickname;
+
+        database = FirebaseDatabase.getInstance();
+
+        mDatabase = database.getReference("User");
+        mDatabaseW = database.getReference("Workouts");
 
         BackButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,10 +93,16 @@ public class WorkoutMakerActivity extends AppCompatActivity {
                     num++;
                 }
                 Intent returnIntent = new Intent();
-                returnIntent.putExtra("Workout",workoutList);
+                mDatabaseW.child("Workout" + (10000000+MainActivity.NumOfWorkoutsALl)).child("UIDofCreator").setValue(MainActivity.user.getUid());
+                mDatabaseW.child("Workout" + (10000000+MainActivity.NumOfWorkoutsALl)).child("Name").setValue(name);
+                mDatabaseW.child("Workout" + (10000000+MainActivity.NumOfWorkoutsALl)).child(name).setValue(workoutList);
+
+                mDatabase.child(MainActivity.Nickname).child("NumOfWorkouts").setValue(MainActivity.NumOfWorkouts+1);
+
                 returnIntent.putExtra("name", name);
                 setResult(Activity.RESULT_OK,returnIntent);
                 WorkoutAdapter.exercises.clear();
+
                 finish();
 
             }

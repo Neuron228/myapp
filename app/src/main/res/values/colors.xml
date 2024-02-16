@@ -11,7 +11,9 @@
     <color name="off_white">#FAFAFA</color>
 
     <color name="background">#FAF9EF</color>
-    <color name="rose">#EC46A4</color>
+
+    <color name="beige">#FFF8DC</color>
+    <color name="rose">#F864B8</color>
     <color name="pastel_gray">#70798C</color>
     <color name="raisin_black">#252323</color>
 

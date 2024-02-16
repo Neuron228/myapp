@@ -9,6 +9,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class CreatedWorkoutActivity extends AppCompatActivity {
 
@@ -24,7 +25,10 @@ public class CreatedWorkoutActivity extends AppCompatActivity {
         Button BackButton = findViewById(R.id.BackButton4);
         Button StartButton = findViewById(R.id.start);
 
+
+
         nameWorkout.setText(WorkoutFragment.list.get(Position));
+
         ArrayList<Workout> workout = WorkoutFragment.AllWorkoutsList.get(Position);
         WorkoutList.setItemsCanFocus(true);
         WorkoutAdapter2 adapter2 = new WorkoutAdapter2(this,workout);

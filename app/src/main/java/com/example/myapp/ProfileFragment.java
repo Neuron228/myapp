@@ -120,7 +120,7 @@ public class ProfileFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == LAUNCH_SECOND_ACTIVITY) {
-            if(resultCode == Activity.RESULT_OK){
+            if(resultCode == Activity.RESULT_OK) {
 
                 adapter1.notifyDataSetChanged();
             }
