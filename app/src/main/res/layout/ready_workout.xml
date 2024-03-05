@@ -4,62 +4,82 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/raisin_black"
     tools:context=".CreatedWorkoutActivity">
+
+
+    <View
+        android:layout_below="@+id/nameWorkout"
+        android:layout_width="fill_parent"
+        android:layout_height="4dp"
+        android:background="@color/black" />
 
     <TextView
         android:id="@+id/nameWorkout"
         android:layout_width="match_parent"
+
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginRight="200dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
         android:ems="20"
+        android:fontFamily="@font/nunito_bold_italic"
         android:hint="@string/name_workout"
-        android:textColor="@color/rose"
         android:minHeight="48dp"
         android:paddingTop="10dp"
-        android:textAlignment="textStart"
-        android:textSize="20sp"
+        android:textAlignment="center"
+        android:textColor="@color/beige"
+        android:textSize="40dp"
         tools:layout_editor_absoluteX="153dp"
         tools:layout_editor_absoluteY="128dp" />
-
-    <Button
-        android:id="@+id/start"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_marginLeft="280dp"
-        android:layout_marginTop="40dp"
-        android:backgroundTint="#000000"
-        android:textColor="@color/rose"
-
-        android:text="@string/start"
-        android:textSize="18sp" />
 
     <ListView
         android:id="@+id/WorkoutList2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/nameWorkout"
-       />
+        android:divider="@color/black"
+        android:dividerHeight="12px"
+       >
+    </ListView>
 
-    <Button
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/change"
-        android:layout_width="96dp"
-        android:layout_height="70dp"
-        android:layout_marginLeft="300dp"
-        android:textColor="@color/rose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="350dp"
         android:layout_marginTop="650dp"
-        android:backgroundTint="#000000"
-        android:text="Change" />
+        android:backgroundTint="@color/raisin_black"
+        app:backgroundTint="@color/beige"
+        android:clickable="true"
+        app:borderWidth="1dp"
+        app:srcCompat="@drawable/_725775_edit_icon"
+        app:tint="@color/beige" />
 
-    <Button
+    <ImageButton
+        android:id="@+id/share"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="360dp"
+        android:layout_marginTop="0dp"
+        android:backgroundTint="@color/fui_transparent"
+        android:scaleType="center"
+        android:src="@drawable/_564530_arrow_next_share_direction_icon"
+        android:text="Share"
+
+        android:textColor="@color/raisin_black" />
+
+
+
+    <ImageButton
         android:id="@+id/BackButton4"
         android:layout_width="30dp"
         android:layout_height="40dp"
-        android:backgroundTint="#FFFFFF"
+        android:layout_marginTop="7dp"
+        android:layout_marginLeft="5dp"
+        android:backgroundTint="@color/fui_transparent"
         android:paddingHorizontal="0dp"
         android:textSize="14dp"
-        app:icon="?attr/homeAsUpIndicator"
-        app:iconTint="#000000" />
+        android:src="@drawable/_994376_arrow_back_left_navigation_previous_icon"
+        />
 
 </RelativeLayout>

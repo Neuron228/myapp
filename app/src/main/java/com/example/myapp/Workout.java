@@ -3,7 +3,7 @@ package com.example.myapp;
 import java.io.Serializable;
 
 public class Workout implements Serializable {
-    //private int type;   //0-1
+    private String id;
     private String name;
     private int resttime;
     private int repetitions;
@@ -20,6 +20,21 @@ public class Workout implements Serializable {
         this.ViewType = ViewType;
     }
     public Workout(String name, int RestTime, String TimeType,int ViewType){
+        this.name = name;
+        this.resttime = RestTime;
+        this.TimeType = TimeType;
+        this.ViewType = ViewType;
+    }
+    public Workout(String id, String name, int repetitions,int sets,int resttime,int ViewType){
+        this.id = id;
+        this.name = name;
+        this.repetitions=repetitions;
+        this.sets = sets;
+        this.resttime = resttime;
+        this.ViewType = ViewType;
+    }
+    public Workout(String id,String name, int RestTime, String TimeType,int ViewType){
+        this.id = id;
         this.name = name;
         this.resttime = RestTime;
         this.TimeType = TimeType;
@@ -52,6 +67,15 @@ public class Workout implements Serializable {
     public void setRepetitions(int count) {
         this.repetitions = count;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public int getRepetitions() {
         return repetitions;
     }

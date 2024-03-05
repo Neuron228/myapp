@@ -10,19 +10,19 @@
         android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+        android:fontFamily="@font/nunito_extrabold"
         android:text="@string/first_name"
         android:textAlignment="center"
+        android:textColor="@color/beige"
         android:textSize="34sp"
-        android:textStyle="bold"
-        android:textColor="@color/beige"/>
+        android:textStyle="bold" />
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="47dp"
-        android:layout_below="@+id/textView2"
+        android:divider="@color/black"
         />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

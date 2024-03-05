@@ -37,8 +37,9 @@ public class MainActivity extends FragmentActivity {
     DatabaseReference mDatabaseW;
     static String email;
     static String Nickname;
-    static String name;
+    static String Username;
     public static FirebaseUser user ;
+    static int NumForID;
     static int NumOfPublications;
     static ArrayList<String> items = new ArrayList<>();
 
@@ -48,6 +49,11 @@ public class MainActivity extends FragmentActivity {
     public static ArrayList<String> publications = new ArrayList<String>();
     public static ArrayList<String> list = new ArrayList<String>();
 
+    public static ArrayList<String> IDlist = new ArrayList<String>();
+
+
+    public static ArrayList<ArrayList<Workout>> ALLUserWorkouts = new ArrayList<>();
+
 
 
     @Override
@@ -56,7 +62,21 @@ public class MainActivity extends FragmentActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        String intentFragment = getIntent().getExtras().getString("frgToLoad");
+        if(intentFragment != null) {
 
+            switch (intentFragment) {
+                case "FRAGMENT_WORKOUT":
+                    replaceFragment(new WorkoutFragment());
+                    break;
+                case "FRAGMENT_SEARCH":
+                    replaceFragment(new SearchFragment());
+                    break;
+                case "FRAGMENT_PROFILE":
+                    replaceFragment(new ProfileFragment());
+                    break;
+            }
+        }
 
 
 
@@ -89,8 +109,7 @@ public class MainActivity extends FragmentActivity {
 
         Intent intent = getIntent();
         email = intent.getStringExtra("email");
-        //бубен уебище блять
-        //omg facts - pgltsmn
+
 
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
@@ -98,7 +117,7 @@ public class MainActivity extends FragmentActivity {
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     if (ds.child("email").getValue().equals(MainActivity.email)) {
                         int n =0;
-                        name = ds.child("firstName").getValue(String.class) +" "+ ds.child("lastName").getValue(String.class);
+                        Username = ds.child("firstName").getValue(String.class) +" "+ ds.child("lastName").getValue(String.class);
                         NumOfPublications = ds.child("numOfPublications").getValue(Integer.class);
                         NumOfWorkouts = ds.child("NumOfWorkouts").getValue(Integer.class);
                         publications.clear();
@@ -125,20 +144,48 @@ public class MainActivity extends FragmentActivity {
         mDatabaseW.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                NumOfWorkoutsALl = snapshot.getChildrenCount();
+                NumForID = Math.toIntExact(snapshot.child("NumForID").getValue(Long.class));
+                NumOfWorkoutsALl = snapshot.getChildrenCount()-1;
                 list.clear();
                 for (DataSnapshot ds : snapshot.getChildren()) {
-
-                    if (ds.child("UIDofCreator").getValue(String.class).equals(user.getUid())) {
-                            String name = ds.child("Name").getValue(String.class);
-                            System.out.println(name);
-                            list.add(name);
-
-
+                    ArrayList<Workout> ALLWorkout = new ArrayList<>();
+                    try {
+                        ds.child("UIDofCreator").getValue(String.class).equals(null);
+                    }catch (NullPointerException a){
+                        continue;
                     }
 
+                    if (ds.child("UIDofCreator").getValue(String.class).equals(user.getUid()) ||( ds.child("AnotherUsersOfWorkout").child(user.getUid()).getValue(String.class) != null && ds.child("AnotherUsersOfWorkout").child(user.getUid()).getValue(String.class).equals(user.getUid()))) {
+                        String name = ds.child("Name").getValue(String.class);
+                        String id = ds.child("IDOfWorkout").getValue(String.class);
+                        IDlist.add(id);
+
+                        list.add(name);
+                        int num = (int)ds.child(name).getChildrenCount();
+
+
+                        for (int i = 0;i<num;i++){
+
+                            switch (ds.child(name).child(Integer.toString(i)).child("itemViewType").getValue(Integer.class)) {
+                                case 1:
+                                    Workout workout = new Workout(ds.child("IDOfWorkout").getValue(String.class),ds.child(name).child(Integer.toString(i)).child("name").getValue(String.class),ds.child(name).child(Integer.toString(i)).child("repetitions").getValue(Integer.class),ds.child(name).child(Integer.toString(i)).child("sets").getValue(Integer.class),ds.child(name).child(Integer.toString(i)).child("resttime").getValue(Integer.class),ds.child(name).child(Integer.toString(i)).child("itemViewType").getValue(Integer.class));
+                                    ALLWorkout.add(workout);
+                                    break;
+
+                                case 2:
+                                    Workout workout1 = new Workout(ds.child("IDOfWorkout").getValue(String.class),ds.child(name).child(Integer.toString(i)).child("name").getValue(String.class),ds.child(name).child(Integer.toString(i)).child("resttime").getValue(Integer.class),ds.child(name).child(Integer.toString(i)).child("timeType").getValue(String.class),ds.child(name).child(Integer.toString(i)).child("itemViewType").getValue(Integer.class));
+                                    ALLWorkout.add(workout1);
+                                    break;
+                            }
+                        }
+
+                        ALLUserWorkouts.add(ALLWorkout);
+                    }
                 }
+
+                Collections.reverse(ALLUserWorkouts);
                 Collections.reverse(list);
+                Collections.reverse(IDlist);
             }
 
             @Override

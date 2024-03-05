@@ -12,9 +12,11 @@
 
     <color name="background">#FAF9EF</color>
 
-    <color name="beige">#FFF8DC</color>
+    <color name="beige">#E0CCBE</color>
     <color name="rose">#F864B8</color>
     <color name="pastel_gray">#70798C</color>
-    <color name="raisin_black">#252323</color>
+    <color name="salate">#D5CEA3</color>
+    <color name="mint">#E5E5CB</color>
+    <color name="raisin_black">#3C3633</color>
 
 </resources>

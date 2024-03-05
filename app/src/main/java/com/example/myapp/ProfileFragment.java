@@ -93,7 +93,7 @@ public class ProfileFragment extends Fragment {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         TextView DisplayName = view.findViewById(R.id.DisplayName);
 
-        DisplayName.setText(MainActivity.name);
+        DisplayName.setText(MainActivity.Username);
 
         adapter1 = new AdapterOfPublications(getActivity(), MainActivity.publications, MainActivity.Nickname);
         PublicationsList.setAdapter(adapter1);

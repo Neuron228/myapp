@@ -1,13 +1,24 @@
 package com.example.myapp;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +28,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,12 +40,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import kotlin.jvm.internal.MagicApiIntrinsics;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link WorkoutFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class WorkoutFragment extends Fragment {
+public class WorkoutFragment extends Fragment implements ArrayAdapterRecyclerView.ItemClickListener{
 
     private FloatingActionButton AddButton1;
 
@@ -46,13 +61,11 @@ public class WorkoutFragment extends Fragment {
     private String mParam2;
 
     FirebaseDatabase database;
-    DatabaseReference mDatabase;
-    ArrayAdapter<String> adapter;
-    public static ArrayList<String> list = new ArrayList<String>();
-    public static ArrayList<Workout> workout = new ArrayList<Workout>();
-    public static ArrayList<ArrayList<Workout>> AllWorkoutsList = new ArrayList<ArrayList<Workout>>();
+    DatabaseReference mDatabaseW;
+    DatabaseReference mDatabaseU;
+    ArrayAdapterRecyclerView adapter;
 
-    ListView ListView;
+    RecyclerView recyclerView;
 
     int LAUNCH_SECOND_ACTIVITY = 1;
 
@@ -87,59 +100,84 @@ public class WorkoutFragment extends Fragment {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_workout, container,false);
         AddButton1 = view.findViewById(R.id.AddButton1);
-        ListView = view.findViewById(R.id.ListView);
+        recyclerView = view.findViewById(R.id.ListView);
+        TextView MyWorkouts = view.findViewById(R.id.textView2);
 
         database = FirebaseDatabase.getInstance();
-        mDatabase = database.getReference("Workouts");
+        mDatabaseW = database.getReference("Workouts");
+        mDatabaseU = database.getReference("User");
 
+
+        DividerItemDecoration itemDecorator = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
+        itemDecorator.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.divider));
+        recyclerView.addItemDecoration(itemDecorator);
 
         AddButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent1 = new Intent(".WorkoutMakerActivity");
-                startActivityForResult(intent1,1);
+                intent1.putExtra("view","set");
+                startActivity(intent1);
             }
         });
-        ListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new ArrayAdapterRecyclerView(getContext(),MainActivity.list);
+        adapter.setClickListener(this);
+        recyclerView.setAdapter(adapter);
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent2 = new Intent(".CreatedWorkoutActivity");
-                intent2.putExtra("NamePosition",position);
-                startActivity(intent2);
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                int position =  viewHolder.getBindingAdapterPosition();
+                new AlertDialog.Builder(getContext())
+                        .setTitle("Delete workout")
+                        .setMessage("Are you sure you want to delete this workout?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                mDatabaseW.child(MainActivity.IDlist.get(position)).removeValue();
+                                MainActivity.IDlist.remove(position);
+                                MainActivity.list.remove(position);
+                                MainActivity.ALLUserWorkouts.remove(position);
+                                mDatabaseU.child(MainActivity.Nickname).child("NumOfWorkouts").setValue(MainActivity.NumOfWorkouts - 1);
+
+                                adapter.notifyDataSetChanged();
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no,  new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                adapter.notifyItemChanged(position);
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
 
             }
         });
 
-        List<String> items = list;
-
-        adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1,MainActivity.list);
-        ListView.setAdapter(adapter);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
 
 
         return view;
     }
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    public void onItemClick(View view, int position) {
 
-        if (resultCode != Activity.RESULT_CANCELED) {
-            if(requestCode == LAUNCH_SECOND_ACTIVITY) {
-                if (data != null) {
-                    String st = data.getStringExtra("name");
-                    System.out.println("SOSI");
-                    adapter.notifyDataSetChanged();
-
-                }
-            }
-            if (resultCode == Activity.RESULT_CANCELED) {
-
-            }
-        }
+        Intent intent2 = new Intent(".CreatedWorkoutActivity");
+        intent2.putExtra("NamePosition",position);
+        startActivity(intent2);
     }
+
 }

@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -45,7 +46,7 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.signup);
 
 
-
+        ImageButton backbutton = findViewById(R.id.backbutton);
         EditText LastName = findViewById(R.id.signupLastName);
         EditText Email = findViewById(R.id.signupEmail);
         EditText Password = findViewById(R.id.signupPassword);
@@ -59,6 +60,12 @@ public class SignUpActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
 
+        backbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         CreateAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

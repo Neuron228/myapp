@@ -18,7 +18,9 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -51,19 +53,17 @@ public class SearchFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    EditText searchInput;
-    ImageButton searchButton;
-    ListView PublicationsList;
+    SearchView searchView;
     ListView listView;
-    FirebaseDatabase database;
-    DatabaseReference mDatabase;
 
-    AdapterOfPublications adapter1;
     public ArrayList<ApplicationAccount> UsersList = new ArrayList<>();
+
+
     ArrayList<ApplicationAccount> UsersList1;
 
     boolean userList1Activated = false;
-    public int PositionOfSelectedItem;
+
+    SearchUserRecyclerAdapter adapter;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -110,10 +110,11 @@ public class SearchFragment extends Fragment {
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     ApplicationAccount account = new ApplicationAccount(ds.child("firstName").getValue(String.class), ds.child("lastName").getValue(String.class), ds.child("nickname").getValue(String.class), ds.child("UID").getValue(String.class));
                     if (!account.getUid().equals(fUser.getUid())) {
+
                         UsersList.add(account);
                     }
                     if (getActivity() != null) {
-                        SearchUserRecyclerAdapter adapter = new SearchUserRecyclerAdapter(getActivity(), UsersList);
+                        adapter = new SearchUserRecyclerAdapter(getActivity(),R.layout.search_user_recycler_row ,UsersList);
                         listView.setAdapter(adapter);
                     }
                 }
@@ -123,20 +124,26 @@ public class SearchFragment extends Fragment {
             }
 
         });
-        searchInput = view.findViewById(R.id.seach_username_input);
-        searchButton = view.findViewById(R.id.search_user_btn);
+
+        searchView = view.findViewById(R.id.SerchView);
+        searchView.clearFocus();
+        searchView.setIconifiedByDefault(false);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterList(newText);
+                return false;
+            }
+        });
         listView = view.findViewById(R.id.search_user_listview);
 
-        searchInput.requestFocus();
 
-        searchButton.setOnClickListener(v -> {
-            String searchTerm = searchInput.getText().toString();
-            if (searchTerm.isEmpty() || searchTerm.length() < 3) {
-                searchInput.setError("Invalid Username");
-                return;
-            }
-            SearchPeopleAndFriends(searchTerm);
-        });
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -157,26 +164,21 @@ public class SearchFragment extends Fragment {
             }
         });
 
+
         return view;
     }
-
-
-    private void SearchPeopleAndFriends(String searchBoxInput) {
-        UsersList1 = new ArrayList<>();
-        userList1Activated = false;
-        for(int i=0;i<UsersList.size();i++){
-            ApplicationAccount user = UsersList.get(i);
-            if(user.getNickname().startsWith(searchBoxInput) || user.getLastName().startsWith(searchBoxInput)||user.getFirstName().startsWith(searchBoxInput)){
-                UsersList1.add(user);
+    private void filterList(String text){
+        ArrayList<ApplicationAccount> UsersListFiltered = new ArrayList<>();
+        for (ApplicationAccount item : UsersList){
+            if(item.getNickname().toLowerCase().contains(text) || item.getLastName().toLowerCase().contains(text)||item.getFirstName().toLowerCase().contains(text)){
+                UsersListFiltered.add(item);
             }
         }
-            if(UsersList1.size() ==0){
-                searchInput.setError("User is not found");
-            }
-
-        SearchUserRecyclerAdapter adapter = new SearchUserRecyclerAdapter(getContext(), UsersList1);
-        userList1Activated =true;
-        listView.setAdapter(adapter);
+        if (UsersListFiltered.isEmpty()){
+            Toast.makeText(getActivity(), "No data found", Toast.LENGTH_SHORT).show();
+        }else{
+            adapter.setFilteredList(UsersListFiltered);
+        }
 
     }
 

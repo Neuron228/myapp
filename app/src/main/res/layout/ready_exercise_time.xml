@@ -8,28 +8,34 @@
 
     <TextView
         android:id="@+id/nameView1Text"
-        android:layout_width="140dp"
+        android:layout_width="230dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
         android:hint="@string/name_exercise"
         android:minHeight="48dp"
-        android:textSize="18sp" />
+        android:paddingLeft="3dp"
+        android:textColor="@color/beige"
+        android:textSize="30dp" />
 
     <TextView
         android:id="@+id/timeText"
         android:layout_width="70dp"
         android:layout_height="48dp"
+        android:layout_marginLeft="245dp"
         android:layout_marginTop="18dp"
-        android:layout_marginLeft="250dp"
         android:hint="@string/Time"
-        android:textSize="18sp" />
+        android:paddingLeft="0dp"
+        android:textAlignment="textEnd"
+        android:textColor="@color/beige"
+        android:textSize="30dp" />
 
     <TextView
         android:id="@+id/timeTypeText"
         android:layout_width="70dp"
+        android:textColor="@color/beige"
         android:layout_height="48dp"
         android:layout_marginTop="18dp"
         android:layout_marginLeft="320dp"
-        android:textSize="18sp" />
+        android:textSize="30dp" />
 
 </RelativeLayout>

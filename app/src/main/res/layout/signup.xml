@@ -4,63 +4,89 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AccountPageActivity">
-
-
+    android:background="@color/raisin_black"
+    >
+    <ImageButton
+        android:id="@+id/backbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/_994376_arrow_back_left_navigation_previous_icon"
+        android:background="@color/fui_transparent"
+        />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_beige"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        >
     <EditText
         android:id="@+id/signupName"
         android:layout_width="300dp"
         android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        android:layout_marginLeft="10dp"
-        android:paddingTop="0dp"
+        android:fontFamily="@font/nunito_bold_italic"
         android:hint="Name:"
-        android:textSize="25dp"/>
+        android:paddingTop="0dp"
+        android:textSize="25dp" />
+
     <EditText
         android:id="@+id/signupLastName"
         android:layout_width="300dp"
         android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="120dp"
-        android:layout_marginLeft="10dp"
-        android:paddingTop="0dp"
+        android:fontFamily="@font/nunito_bold_italic"
         android:hint="Last name:"
-        android:textSize="25dp"/>
+        android:paddingTop="0dp"
+        android:textSize="25dp" />
+
     <EditText
         android:id="@+id/signupEmail"
         android:layout_width="300dp"
         android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="190dp"
-        android:layout_marginLeft="10dp"
-        android:paddingTop="0dp"
+        android:fontFamily="@font/nunito_bold_italic"
         android:hint="Email:"
-        android:textSize="25dp"/>
+        android:paddingTop="0dp"
+        android:textSize="25dp" />
+
     <EditText
         android:id="@+id/signupPassword"
         android:layout_width="300dp"
         android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="260dp"
-        android:layout_marginLeft="10dp"
-        android:paddingTop="0dp"
+        android:fontFamily="@font/nunito_bold_italic"
         android:hint="Password:"
-        android:textSize="25dp"/>
+        android:paddingTop="0dp"
+        android:textSize="25dp" />
+
     <EditText
         android:id="@+id/signupNickname"
         android:layout_width="300dp"
         android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="330dp"
-        android:layout_marginLeft="10dp"
-        android:paddingTop="0dp"
+        android:fontFamily="@font/nunito_bold_italic"
         android:hint="Nickname:"
-        android:textSize="25dp"/>
+        android:paddingTop="0dp"
+        android:textSize="25dp" />
 
     <Button
         android:id="@+id/CreateAccount"
         android:layout_width="190dp"
         android:layout_height="60dp"
-        android:text="Create Account"
-        android:textColor="@color/rose"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="400dp"
-        android:layout_marginLeft="112dp"/>
+        android:fontFamily="@font/nunito_extrabold"
+        android:text="SIGN UP"
+        android:textSize="12dp"
+        android:backgroundTint="@color/mint"
+        android:textColor="@color/raisin_black" />
+    </RelativeLayout>
 
 
 

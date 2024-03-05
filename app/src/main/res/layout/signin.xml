@@ -4,41 +4,69 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#39F43636"
-    tools:context=".AccountPageActivity">
+    android:background="@color/raisin_black"
+  >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_beige"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        >
 
 
-    <Button
-        android:id="@+id/signIn"
-        android:layout_width="140dp"
-        android:layout_height="60dp"
-        android:layout_marginLeft="138dp"
-        android:layout_marginTop="400dp"
-        android:backgroundTint="#45D61C1C"
-        android:text="Sign In"
-        android:textSize="17dp" />
+        <EditText
+            android:id="@+id/signInEmail"
+            android:layout_width="350dp"
+            android:layout_height="60dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="80dp"
+            android:backgroundTint="#FFFFFF"
+            android:fontFamily="@font/nunito_bold_italic"
 
-    <EditText
-        android:id="@+id/signInEmail"
-        android:layout_width="350dp"
-        android:layout_height="60dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="190dp"
-        android:backgroundTint="#FFFFFF"
-        android:hint="Email:"
-        android:paddingTop="0dp"
-        android:textSize="25dp" />
+            android:hint="Email:"
+            android:paddingTop="0dp"
+            android:textSize="25dp" />
 
-    <EditText
-        android:id="@+id/signInPassword"
-        android:layout_width="350dp"
-        android:layout_height="60dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="260dp"
-        android:backgroundTint="#FFFFFF"
-        android:hint="Password:"
-        android:paddingTop="0dp"
-        android:textSize="25dp" />
+        <EditText
+            android:id="@+id/signInPassword"
+            android:layout_width="350dp"
+            android:layout_height="60dp"
+            android:layout_below="@+id/signInEmail"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="#FFFFFF"
+            android:fontFamily="@font/nunito_bold_italic"
+            android:hint="Password:"
+            android:paddingTop="0dp"
+            android:textSize="25dp" />
+
+        <TextView
+            android:id="@+id/SignUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/signInPassword"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:clickable="true"
+            android:fontFamily="@font/nunito_extrabold"
+            android:text="Sign Up"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/signIn"
+            android:layout_width="140dp"
+            android:layout_height="60dp"
+            android:layout_below="@+id/SignUp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:backgroundTint="@color/mint"
+            android:fontFamily="@font/nunito_extrabold"
+            android:text="Sign In"
+            android:textColor="@color/raisin_black"
+            android:textSize="17dp" />
+    </RelativeLayout>
 
 
 </RelativeLayout>

@@ -14,18 +14,26 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class SearchUserRecyclerAdapter extends BaseAdapter {
 
     private LayoutInflater inflater;
     ArrayList<ApplicationAccount> UsersList;
+    int resource;
 
 
 
-    public SearchUserRecyclerAdapter(Context context, ArrayList<ApplicationAccount> UsersList) {
+    public SearchUserRecyclerAdapter(Context context,int resource ,ArrayList<ApplicationAccount> UsersList) {
+        this.resource = resource;
         this.inflater = LayoutInflater.from(context);
         this.UsersList = UsersList;
+    }
+
+    public void setFilteredList(ArrayList<ApplicationAccount> filteredList){
+        this.UsersList = filteredList;
+        notifyDataSetChanged();
     }
     public int getCount() {
         return UsersList.size();
@@ -43,7 +51,7 @@ public class SearchUserRecyclerAdapter extends BaseAdapter {
         final UserModelViewHolder viewHolder;
 
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.search_user_recycler_row, parent, false);
+            convertView = inflater.inflate(resource, parent, false);
             viewHolder = new UserModelViewHolder(convertView);
             convertView.setTag(viewHolder);
         } else {

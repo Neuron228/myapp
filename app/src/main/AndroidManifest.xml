@@ -13,23 +13,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Myapp"
-        tools:targetApi="31">
-        <activity
-            android:name=".CreatePublicationActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name=".CreatePublicationActivity" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+        tools:targetApi="31">
+
         <activity
             android:name=".SignInActivity"
             android:exported="true">
             <intent-filter>
-                <action android:name=".SignInActivity" />
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
@@ -41,15 +34,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".AccountPageActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity
             android:name=".CreatedWorkoutActivity"
             android:exported="false">
@@ -73,6 +58,15 @@
             android:name=".MainActivity"
             android:exported="false">
         </activity>
+        <activity
+            android:name=".Pop"
+            android:theme="@style/AppTheme.CustomTheme"
+            >
+        </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

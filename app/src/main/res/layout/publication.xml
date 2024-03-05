@@ -10,36 +10,39 @@
         android:id="@+id/UserNamePublication"
         android:layout_width="160dp"
         android:layout_height="30dp"
-        android:hint="@string/UserName"
-        android:textColor="@color/raisin_black"
-        android:minHeight="48dp"
-        android:textSize="18sp"
-        android:paddingLeft="5dp"
         android:layout_marginTop="10dp"
-        />
+        android:fontFamily="@font/nunito_extrabold"
+        android:hint="@string/UserName"
+        android:minHeight="48dp"
+        android:paddingLeft="5dp"
+        android:textColor="@color/beige"
+        android:textSize="18sp" />
+
     <TextView
         android:id="@+id/messagePublication"
         android:layout_width="match_parent"
-        android:textColor="@color/raisin_black"
         android:layout_height="100dp"
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/nunito_bold_italic"
         android:hint="Text Message:"
         android:minHeight="48dp"
-        android:textSize="23dp"
-        android:layout_marginTop="50dp"
+        android:paddingLeft="10dp"
         android:paddingTop="10dp"
-        android:paddingLeft="10dp"/>
+        android:textColor="@color/beige"
+        android:textSize="23dp" />
 
 
     <TextView
         android:id="@+id/datetime"
         android:layout_width="100dp"
-        android:textColor="@color/raisin_black"
         android:layout_height="30dp"
         android:layout_marginLeft="290dp"
         android:layout_marginTop="10dp"
+        android:fontFamily="@font/nunito_extrabold"
         android:hint="Date:"
-        android:paddingLeft="15dp"
         android:minHeight="48dp"
+        android:paddingLeft="15dp"
+        android:textColor="@color/beige"
         android:textSize="18sp" />
 
 

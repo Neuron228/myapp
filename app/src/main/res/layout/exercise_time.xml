@@ -11,6 +11,7 @@
         android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
+        android:maxLength="15"
         android:hint="@string/name_exercise"
         android:minHeight="48dp"
         android:textSize="18sp" />
@@ -21,12 +22,14 @@
         android:layout_height="48dp"
         android:layout_marginTop="18dp"
         android:layout_marginLeft="250dp"
+        android:maxLength="2"
         android:hint="@string/Time"
         android:textSize="18sp" />
 
     <RadioGroup
         android:id="@+id/typeTime"
         android:layout_width="match_parent"
+
         android:layout_height="wrap_content">
 
         <RadioButton

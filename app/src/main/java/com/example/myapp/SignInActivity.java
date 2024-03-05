@@ -2,10 +2,13 @@ package com.example.myapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -33,16 +36,26 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signin);
 
-
+        TextView signUp = findViewById(R.id.SignUp);
         Button SignInButton = findViewById(R.id.signIn);
-
         EditText Email = findViewById(R.id.signInEmail);
         EditText PassWord = findViewById(R.id.signInPassword);
+
+        SpannableString content = new SpannableString("Sign Up");
+        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+        signUp.setText(content);
 
         database = FirebaseDatabase.getInstance();
         mDatabase = database.getReference("User");
         mAuth = FirebaseAuth.getInstance();
 
+        signUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(".SignUpActivity");
+                startActivity(i);
+            }
+        });
         SignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,5 +94,15 @@ public class SignInActivity extends AppCompatActivity {
         Intent profileIntent = new Intent(this, MainActivity.class);
         profileIntent.putExtra("email",currentUser.getEmail());
         startActivity(profileIntent);
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null) {
+            Intent profileIntent = new Intent(this, MainActivity.class);
+            profileIntent.putExtra("email",currentUser.getEmail());
+            startActivity(profileIntent);
+        }
     }
 }
