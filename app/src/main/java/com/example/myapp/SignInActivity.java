@@ -54,6 +54,7 @@ public class SignInActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(".SignUpActivity");
                 startActivity(i);
+                overridePendingTransition(R.anim.enter,R.anim.exit);
             }
         });
         SignInButton.setOnClickListener(new View.OnClickListener() {

@@ -10,6 +10,7 @@ import android.view.View;
 
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -44,7 +45,7 @@ public class WorkoutMakerActivity extends AppCompatActivity {
         Button button3 = findViewById(R.id.Button3);
         Button AddButton = findViewById(R.id.AddButton2);
         ListView WorkoutList = findViewById(R.id.WorkoutList);
-        Button BackButton = findViewById(R.id.BackButton3);
+        ImageButton BackButton = findViewById(R.id.BackButton3);
         Button AddButtonTime = findViewById(R.id.AddButtonTime);
 
         Bundle arguments = getIntent().getExtras();

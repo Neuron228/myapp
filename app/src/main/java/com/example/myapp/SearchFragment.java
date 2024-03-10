@@ -3,10 +3,12 @@ package com.example.myapp;
 import android.app.appsearch.SearchResult;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 
 import androidx.annotation.NonNull;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -125,7 +127,7 @@ public class SearchFragment extends Fragment {
 
         });
 
-        searchView = view.findViewById(R.id.SerchView);
+        searchView = view.findViewById(R.id.SearchView);
         searchView.clearFocus();
         searchView.setIconifiedByDefault(false);
 

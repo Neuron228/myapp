@@ -12,7 +12,11 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+
 
 import com.example.myapp.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -26,8 +30,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
 
 public class MainActivity extends FragmentActivity {
     //todo - intro screen (splash-screen)
@@ -35,17 +37,22 @@ public class MainActivity extends FragmentActivity {
     FirebaseDatabase database;
     DatabaseReference mDatabase;
     DatabaseReference mDatabaseW;
+
     static String email;
     static String Nickname;
+    private Fragment fragment = null;
     static String Username;
     public static FirebaseUser user ;
     static int NumForID;
     static int NumOfPublications;
+
+    static String profilePicUri;
     static ArrayList<String> items = new ArrayList<>();
 
     static int NumOfWorkouts;
 
     static long NumOfWorkoutsALl;
+    ProgressBar progressBar;
     public static ArrayList<String> publications = new ArrayList<String>();
     public static ArrayList<String> list = new ArrayList<String>();
 
@@ -54,13 +61,119 @@ public class MainActivity extends FragmentActivity {
 
     public static ArrayList<ArrayList<Workout>> ALLUserWorkouts = new ArrayList<>();
 
-
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        database = FirebaseDatabase.getInstance();
+        mDatabase = database.getReference("User");
+        mDatabaseW = database.getReference("Workouts");
+        user = FirebaseAuth.getInstance().getCurrentUser();
+
+
+        Intent intent = getIntent();
+        email = intent.getStringExtra("email");
+
+
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    if (ds.child("email").getValue().equals(MainActivity.email)) {
+                        int n = 0;
+                        Username = ds.child("firstName").getValue(String.class) + " " + ds.child("lastName").getValue(String.class);
+                        NumOfPublications = ds.child("numOfPublications").getValue(Integer.class);
+                        NumOfWorkouts = ds.child("NumOfWorkouts").getValue(Integer.class);
+                        profilePicUri = ds.child("pictureUri").getValue(String.class);
+                        publications.clear();
+                        while (n < NumOfPublications && publications.size() != NumOfPublications + 1) {
+                            if (ds.child("publications").child("publication" + String.valueOf(n)).getValue(String.class) != null) {
+                                System.out.println("4");
+                                publications.add(ds.child("publications").child("publication" + String.valueOf(n)).getValue(String.class));
+                                n++;
+                            }
+                        }
+                        Nickname = ds.child("nickname").getValue(String.class);
+
+                    }
+                }
+                Collections.reverse(publications);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        mDatabaseW.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                NumForID = Math.toIntExact(snapshot.child("NumForID").getValue(Long.class));
+                NumOfWorkoutsALl = snapshot.getChildrenCount() - 1;
+                list.clear();
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    ArrayList<Workout> ALLWorkout = new ArrayList<>();
+                    try {
+                        ds.child("UIDofCreator").getValue(String.class).equals(null);
+                    } catch (NullPointerException a) {
+                        continue;
+                    }
+
+                    if (ds.child("UIDofCreator").getValue(String.class).equals(user.getUid()) || (ds.child("AnotherUsersOfWorkout").child(user.getUid()).getValue(String.class) != null && ds.child("AnotherUsersOfWorkout").child(user.getUid()).getValue(String.class).equals(user.getUid()))) {
+                        String name = ds.child("Name").getValue(String.class);
+                        String id = ds.child("IDOfWorkout").getValue(String.class);
+                        IDlist.add(id);
+
+                        list.add(name);
+                        int num = (int) ds.child(name).getChildrenCount();
+
+
+                        for (int i = 0; i < num; i++) {
+
+                            switch (ds.child(name).child(Integer.toString(i)).child("itemViewType").getValue(Integer.class)) {
+                                case 1:
+                                    Workout workout = new Workout(ds.child("IDOfWorkout").getValue(String.class), ds.child(name).child(Integer.toString(i)).child("name").getValue(String.class), ds.child(name).child(Integer.toString(i)).child("repetitions").getValue(Integer.class), ds.child(name).child(Integer.toString(i)).child("sets").getValue(Integer.class), ds.child(name).child(Integer.toString(i)).child("resttime").getValue(Integer.class), ds.child(name).child(Integer.toString(i)).child("itemViewType").getValue(Integer.class));
+                                    ALLWorkout.add(workout);
+                                    break;
+
+                                case 2:
+                                    Workout workout1 = new Workout(ds.child("IDOfWorkout").getValue(String.class), ds.child(name).child(Integer.toString(i)).child("name").getValue(String.class), ds.child(name).child(Integer.toString(i)).child("resttime").getValue(Integer.class), ds.child(name).child(Integer.toString(i)).child("timeType").getValue(String.class), ds.child(name).child(Integer.toString(i)).child("itemViewType").getValue(Integer.class));
+                                    ALLWorkout.add(workout1);
+                                    break;
+                            }
+                        }
+
+                        ALLUserWorkouts.add(ALLWorkout);
+                    }
+                }
+
+                Collections.reverse(ALLUserWorkouts);
+                Collections.reverse(list);
+                Collections.reverse(IDlist);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        fragment = new WorkoutFragment();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.frame_layout, fragment);
+        ft.commit();
+
+
 
         String intentFragment = getIntent().getExtras().getString("frgToLoad");
         if(intentFragment != null) {
@@ -100,101 +213,6 @@ public class MainActivity extends FragmentActivity {
 
             return true;
         });
-        database = FirebaseDatabase.getInstance();
-        mDatabase = database.getReference("User");
-        mDatabaseW = database.getReference("Workouts");
-        user = FirebaseAuth.getInstance().getCurrentUser();
-
-
-
-        Intent intent = getIntent();
-        email = intent.getStringExtra("email");
-
-
-        mDatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot ds : snapshot.getChildren()) {
-                    if (ds.child("email").getValue().equals(MainActivity.email)) {
-                        int n =0;
-                        Username = ds.child("firstName").getValue(String.class) +" "+ ds.child("lastName").getValue(String.class);
-                        NumOfPublications = ds.child("numOfPublications").getValue(Integer.class);
-                        NumOfWorkouts = ds.child("NumOfWorkouts").getValue(Integer.class);
-                        publications.clear();
-                        while (n < NumOfPublications && publications.size() != NumOfPublications+1) {
-                            if(ds.child("publications").child("publication" + String.valueOf(n)).getValue(String.class) != null) {
-
-                                publications.add(ds.child("publications").child("publication" + String.valueOf(n)).getValue(String.class));
-                                n++;
-                            }
-                        }
-                        Nickname = ds.child("nickname").getValue(String.class);
-
-                    }
-                }
-                Collections.reverse(publications);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        mDatabaseW.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                NumForID = Math.toIntExact(snapshot.child("NumForID").getValue(Long.class));
-                NumOfWorkoutsALl = snapshot.getChildrenCount()-1;
-                list.clear();
-                for (DataSnapshot ds : snapshot.getChildren()) {
-                    ArrayList<Workout> ALLWorkout = new ArrayList<>();
-                    try {
-                        ds.child("UIDofCreator").getValue(String.class).equals(null);
-                    }catch (NullPointerException a){
-                        continue;
-                    }
-
-                    if (ds.child("UIDofCreator").getValue(String.class).equals(user.getUid()) ||( ds.child("AnotherUsersOfWorkout").child(user.getUid()).getValue(String.class) != null && ds.child("AnotherUsersOfWorkout").child(user.getUid()).getValue(String.class).equals(user.getUid()))) {
-                        String name = ds.child("Name").getValue(String.class);
-                        String id = ds.child("IDOfWorkout").getValue(String.class);
-                        IDlist.add(id);
-
-                        list.add(name);
-                        int num = (int)ds.child(name).getChildrenCount();
-
-
-                        for (int i = 0;i<num;i++){
-
-                            switch (ds.child(name).child(Integer.toString(i)).child("itemViewType").getValue(Integer.class)) {
-                                case 1:
-                                    Workout workout = new Workout(ds.child("IDOfWorkout").getValue(String.class),ds.child(name).child(Integer.toString(i)).child("name").getValue(String.class),ds.child(name).child(Integer.toString(i)).child("repetitions").getValue(Integer.class),ds.child(name).child(Integer.toString(i)).child("sets").getValue(Integer.class),ds.child(name).child(Integer.toString(i)).child("resttime").getValue(Integer.class),ds.child(name).child(Integer.toString(i)).child("itemViewType").getValue(Integer.class));
-                                    ALLWorkout.add(workout);
-                                    break;
-
-                                case 2:
-                                    Workout workout1 = new Workout(ds.child("IDOfWorkout").getValue(String.class),ds.child(name).child(Integer.toString(i)).child("name").getValue(String.class),ds.child(name).child(Integer.toString(i)).child("resttime").getValue(Integer.class),ds.child(name).child(Integer.toString(i)).child("timeType").getValue(String.class),ds.child(name).child(Integer.toString(i)).child("itemViewType").getValue(Integer.class));
-                                    ALLWorkout.add(workout1);
-                                    break;
-                            }
-                        }
-
-                        ALLUserWorkouts.add(ALLWorkout);
-                    }
-                }
-
-                Collections.reverse(ALLUserWorkouts);
-                Collections.reverse(list);
-                Collections.reverse(IDlist);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-
 
     }
 

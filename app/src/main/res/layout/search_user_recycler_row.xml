@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="User name"
-
+            android:fontFamily="@font/nunito_bold_italic"
             android:textColor="@color/beige"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -31,6 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/beige"
+            android:fontFamily="@font/nunito_extrabold"
             android:text="@nickname"
             android:id="@+id/nickname_text"/>
 

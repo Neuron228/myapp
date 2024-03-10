@@ -1,9 +1,11 @@
 package com.example.myapp;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -82,14 +84,18 @@ public class AnotherProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Typeface typeface = ResourcesCompat.getFont(getContext(), R.font.nunito_extrabold);
+        Typeface typeface1 = ResourcesCompat.getFont(getContext(), R.font.nunito_bold_italic);
+
         View view = inflater.inflate(R.layout.fragment_another_profile, container, false);
         PublicationsList = view.findViewById(R.id.YourPublications);
         Bundle bundle = getArguments();
         String UIDOfUserSelected = bundle.getString("UID");
 
-
-
+        TextView Profile = view.findViewById(R.id.Profile);
+        Profile.setTypeface(typeface);
         TextView DisplayName = view.findViewById(R.id.DisplayName);
+        DisplayName.setTypeface(typeface1);
 
         database = FirebaseDatabase.getInstance();
         mDatabase = database.getReference("User");

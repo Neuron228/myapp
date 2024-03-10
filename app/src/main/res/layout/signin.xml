@@ -14,14 +14,21 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         >
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/nunito_extrabold"
+            android:text="SIGN IN"
+            android:textColor="@color/black"
+            android:textSize="30dp" />
 
         <EditText
             android:id="@+id/signInEmail"
             android:layout_width="350dp"
-            android:layout_height="60dp"
+            android:layout_height="55dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="70dp"
             android:backgroundTint="#FFFFFF"
             android:fontFamily="@font/nunito_bold_italic"
 
@@ -48,10 +55,11 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/signInPassword"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="5dp"
             android:clickable="true"
             android:fontFamily="@font/nunito_extrabold"
             android:text="Sign Up"
+            android:textSize="15dp"
             android:textColor="@color/black" />
 
         <Button
@@ -60,12 +68,12 @@
             android:layout_height="60dp"
             android:layout_below="@+id/SignUp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="30dp"
             android:backgroundTint="@color/mint"
             android:fontFamily="@font/nunito_extrabold"
             android:text="Sign In"
             android:textColor="@color/raisin_black"
-            android:textSize="17dp" />
+            android:textSize="13dp" />
     </RelativeLayout>
 
 

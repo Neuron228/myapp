@@ -2,6 +2,7 @@ package com.example.myapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -59,7 +61,11 @@ public class SearchUserRecyclerAdapter extends BaseAdapter {
         }
         final ApplicationAccount User = UsersList.get(position);
 
+        Typeface typeface = ResourcesCompat.getFont(convertView.getContext(), R.font.nunito_extrabold);
+        Typeface typeface1 = ResourcesCompat.getFont(convertView.getContext(), R.font.nunito_bold_italic);
 
+        viewHolder.nickNameText.setTypeface(typeface);
+        viewHolder.usernameText.setTypeface(typeface1);
         viewHolder.nickNameText.setText("@"+User.getNickname());
         viewHolder.usernameText.setText(User.getFirstName() +" "+ User.getLastName());
 

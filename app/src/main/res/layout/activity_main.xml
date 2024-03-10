@@ -13,7 +13,10 @@
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="56dp"
-        android:background="@drawable/ic_background" />
+        android:background="@drawable/ic_background" >
+
+
+    </FrameLayout>
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

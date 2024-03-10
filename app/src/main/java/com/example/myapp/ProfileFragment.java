@@ -4,9 +4,11 @@ import static android.content.Intent.getIntent;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -15,9 +17,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -85,14 +89,22 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container,false);
 
-
+        Typeface typeface = ResourcesCompat.getFont(getContext(), R.font.nunito_extrabold);
+        Typeface typeface1 = ResourcesCompat.getFont(getContext(), R.font.nunito_bold_italic);
 
         PublicationsList = view.findViewById(R.id.YourPublications);
         Button CreatePublication = view.findViewById(R.id.CreatePublication);
+        TextView Profile = view.findViewById(R.id.Profile);
+        TextView DisplayName = view.findViewById(R.id.DisplayName);
+        ImageView profilePic = view.findViewById(R.id.imageView2);
+
+        DisplayName.setTypeface(typeface1);
+        Profile.setTypeface(typeface);
+        CreatePublication.setTypeface(typeface);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        TextView DisplayName = view.findViewById(R.id.DisplayName);
 
+        Glide.with(getContext()).load(MainActivity.profilePicUri).into(profilePic);
         DisplayName.setText(MainActivity.Username);
 
         adapter1 = new AdapterOfPublications(getActivity(), MainActivity.publications, MainActivity.Nickname);

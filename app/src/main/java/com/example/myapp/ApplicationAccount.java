@@ -1,5 +1,7 @@
 package com.example.myapp;
 
+import android.net.Uri;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -11,6 +13,7 @@ public class ApplicationAccount {
      private String Password;
      private String Nickname;
 
+     private String pictureUri;
      private String uid;
      private int NumOfPublications;
 
@@ -25,15 +28,17 @@ public class ApplicationAccount {
           this.Nickname = Nickname;
           this.uid = uid;
 
+
      }
 
-     public ApplicationAccount(String FirstName, String LastName, String Email, String Password,String Nickname ){
+     public ApplicationAccount(String FirstName, String LastName, String Email, String Password,String Nickname,String pictureUri ){
           this.FirstName = FirstName;
           this.LastName =LastName;
           this.Email =Email;
           this.Password = Password;
           this.Nickname = Nickname;
           this.NumOfPublications = 0;
+          this.pictureUri = pictureUri;
 
      }
 

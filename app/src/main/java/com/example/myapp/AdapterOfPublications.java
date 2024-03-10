@@ -1,10 +1,13 @@
 package com.example.myapp;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import androidx.core.content.res.ResourcesCompat;
 
 import java.util.ArrayList;
 
@@ -39,8 +42,14 @@ public class AdapterOfPublications extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder4) convertView.getTag();
         }
+        Typeface typeface = ResourcesCompat.getFont(convertView.getContext(), R.font.nunito_extrabold);
+        Typeface typeface1 = ResourcesCompat.getFont(convertView.getContext(), R.font.nunito_bold_italic);
+
         final String publications3 = publications2.get(position);
 
+        viewHolder.Date.setTypeface(typeface);
+        viewHolder.UserName.setTypeface(typeface);
+        viewHolder.TextOfPublication.setTypeface(typeface1);
         viewHolder.TextOfPublication.setText(publications3);
         viewHolder.UserName.setText(NameUser);
 
@@ -48,12 +57,13 @@ public class AdapterOfPublications extends BaseAdapter {
     }
 }
 class ViewHolder4 {
-    final TextView UserName,TextOfPublication;
+
+    final TextView UserName,TextOfPublication,Date;
 
 
     ViewHolder4(View view) {
       TextOfPublication = view.findViewById(R.id.messagePublication);
       UserName = view.findViewById(R.id.UserNamePublication);
-
+      Date = view.findViewById(R.id.datetime);
     }
 }

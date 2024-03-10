@@ -4,8 +4,10 @@ import static android.content.Intent.getIntent;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -14,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -79,8 +82,16 @@ public class CreatePublicationFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_create_publication, container, false);
 
+        Typeface typeface = ResourcesCompat.getFont(getContext(), R.font.nunito_extrabold);
+        Typeface typeface1 = ResourcesCompat.getFont(getContext(), R.font.nunito_bold_italic);
+
         Button postButton = view.findViewById(R.id.postButton);
         EditText TextPublication = view.findViewById(R.id.TextPublication);
+        TextView newPost = view.findViewById(R.id.textView3);
+
+        postButton.setTypeface(typeface);
+        TextPublication.setTypeface(typeface1);
+        newPost.setTypeface(typeface);
 
         Nickname = MainActivity.Nickname;
         NumOfPublications = MainActivity.NumOfPublications;

@@ -1,11 +1,13 @@
 package com.example.myapp;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -15,10 +17,14 @@ public class ArrayAdapterRecyclerView extends RecyclerView.Adapter<ArrayAdapterR
 
     private ArrayList<String> mData;
     private LayoutInflater mInflater;
+    Typeface typeface;
+    Typeface typeface1;
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
     ArrayAdapterRecyclerView(Context context, ArrayList<String> data) {
+        typeface = ResourcesCompat.getFont(context, R.font.nunito_extrabold);
+        typeface1 = ResourcesCompat.getFont(context, R.font.nunito_bold_italic);
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
     }
@@ -33,6 +39,7 @@ public class ArrayAdapterRecyclerView extends RecyclerView.Adapter<ArrayAdapterR
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        holder.myTextView.setTypeface(typeface);
         String animal = mData.get(position);
         holder.myTextView.setText(animal);
     }
