@@ -127,6 +127,7 @@ public class SignUpActivity extends AppCompatActivity {
                 if (mImageUri != null){
                     user = new ApplicationAccount(FirstNameText, LastNameText,EmailText,PasswordText,NickNameText,mImageUri.toString());
                     registerUser(EmailText,PasswordText);
+
                 }else {
                     Toast.makeText(SignUpActivity.this,"Please select image",Toast.LENGTH_SHORT).show();
                 }
@@ -146,6 +147,7 @@ public class SignUpActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            System.out.println("0");
                             updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
@@ -162,12 +164,14 @@ public class SignUpActivity extends AppCompatActivity {
         imageReference.putFile(mImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                System.out.println("1");
                 imageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
+                        System.out.println("2");
                         mDatabase.child(user.getNickname()).setValue(user);
                         mDatabase.child(user.getNickname()).child("UID").setValue(FirebaseAuth.getInstance().getUid());
-                        mDatabase.child(user.getNickname()).child("pictureUri").setValue(mImageUri.toString());
+                        mDatabase.child(user.getNickname()).child("pictureUri").setValue(uri.toString());
                         mDatabase.child(user.getNickname()).child("NumOfWorkouts").setValue(0);
                         user.setUid(FirebaseAuth.getInstance().getUid());
                         Intent loginIntent = new Intent(SignUpActivity.this, SignInActivity.class);

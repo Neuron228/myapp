@@ -219,7 +219,7 @@ public class WorkoutFragment extends Fragment implements ArrayAdapterRecyclerVie
     @Override
     public void onItemClick(View view, int position) {
 
-        Intent intent2 = new Intent(".CreatedWorkoutActivity");
+        Intent intent2 = new Intent(getContext(),CreatedWorkoutActivity.class);
         intent2.putExtra("NamePosition",position);
         startActivity(intent2);
     }

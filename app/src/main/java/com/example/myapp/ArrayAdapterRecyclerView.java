@@ -44,14 +44,18 @@ public class ArrayAdapterRecyclerView extends RecyclerView.Adapter<ArrayAdapterR
         holder.myTextView.setText(animal);
     }
 
-    // total number of rows
+    /**
+     * return the rows of
+     * @return int - reoresent the
+     */
     @Override
     public int getItemCount() {
         return mData.size();
     }
 
-
-    // stores and recycles views as they are scrolled off screen
+    /**
+     *     // stores and recycles views as they are scrolled off screen
+     */
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView myTextView;
 
@@ -61,6 +65,10 @@ public class ArrayAdapterRecyclerView extends RecyclerView.Adapter<ArrayAdapterR
             itemView.setOnClickListener(this);
         }
 
+        /**
+         *
+         * @param view -
+         */
         @Override
         public void onClick(View view) {
             if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());

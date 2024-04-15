@@ -1,13 +1,18 @@
 package com.example.myapp;
 
-import static android.content.Intent.getIntent;
 
+
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -20,8 +25,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -29,6 +40,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -52,6 +65,7 @@ public class ProfileFragment extends Fragment {
     ListView PublicationsList;
     int LAUNCH_SECOND_ACTIVITY = 1;
     AdapterOfPublications adapter1;
+    ImageView profilePic;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -96,7 +110,7 @@ public class ProfileFragment extends Fragment {
         Button CreatePublication = view.findViewById(R.id.CreatePublication);
         TextView Profile = view.findViewById(R.id.Profile);
         TextView DisplayName = view.findViewById(R.id.DisplayName);
-        ImageView profilePic = view.findViewById(R.id.imageView2);
+        profilePic = view.findViewById(R.id.imageView2);
 
         DisplayName.setTypeface(typeface1);
         Profile.setTypeface(typeface);
@@ -105,6 +119,9 @@ public class ProfileFragment extends Fragment {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         Glide.with(getContext()).load(MainActivity.profilePicUri).into(profilePic);
+
+
+
         DisplayName.setText(MainActivity.Username);
 
         adapter1 = new AdapterOfPublications(getActivity(), MainActivity.publications, MainActivity.Nickname);

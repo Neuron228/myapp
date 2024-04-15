@@ -4,6 +4,7 @@ import android.app.appsearch.SearchResult;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 
 
@@ -110,7 +111,8 @@ public class SearchFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 UsersList.clear();
                 for (DataSnapshot ds : snapshot.getChildren()) {
-                    ApplicationAccount account = new ApplicationAccount(ds.child("firstName").getValue(String.class), ds.child("lastName").getValue(String.class), ds.child("nickname").getValue(String.class), ds.child("UID").getValue(String.class));
+
+                    ApplicationAccount account = new ApplicationAccount(ds.child("firstName").getValue(String.class), ds.child("lastName").getValue(String.class), ds.child("nickname").getValue(String.class), ds.child("UID").getValue(String.class),ds.child("pictureUri").getValue(String.class));
                     if (!account.getUid().equals(fUser.getUid())) {
 
                         UsersList.add(account);
@@ -150,6 +152,7 @@ public class SearchFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String UidOfUserSelected = UsersList.get(position).getUid();
+                String UriOfUserSelected = UsersList.get(position).getPictureUri();
 
                 if(userList1Activated){
                     UidOfUserSelected =UsersList1.get(position).getUid();
@@ -157,6 +160,7 @@ public class SearchFragment extends Fragment {
                 AnotherProfileFragment f = new AnotherProfileFragment();
                 Bundle bundle = new Bundle();
                 bundle.putString("UID",UidOfUserSelected);
+                bundle.putString("URI",UriOfUserSelected);
                 f.setArguments(bundle);
 
                 FragmentTransaction fragmentTransaction = getActivity()

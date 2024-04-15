@@ -22,12 +22,12 @@ public class ApplicationAccount {
           this.Password = Password;
           this.NumOfPublications = 0;
      }
-     public ApplicationAccount(String FirstName, String LastName,String Nickname,String uid){
+     public ApplicationAccount(String FirstName, String LastName,String Nickname,String uid,String pictureUri){
           this.FirstName = FirstName;
           this.LastName =LastName;
           this.Nickname = Nickname;
           this.uid = uid;
-
+          this.pictureUri = pictureUri;
 
      }
 
@@ -40,6 +40,14 @@ public class ApplicationAccount {
           this.NumOfPublications = 0;
           this.pictureUri = pictureUri;
 
+     }
+
+     public String getPictureUri() {
+          return pictureUri;
+     }
+
+     public void setPictureUri(String pictureUri) {
+          this.pictureUri = pictureUri;
      }
 
      public String getUid() {

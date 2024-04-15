@@ -94,7 +94,11 @@ public class WorkoutAdapter extends BaseAdapter {
                         final EditText Caption = (EditText) v;
                         if (!hasFocus && !Caption.getText().toString().equals("")) {
                             final int position = v.getId();
+                            try {
                             exercises.get(position).nameExercise = Caption.getText().toString();
+                            }catch (IndexOutOfBoundsException e){
+                                System.out.println("suka");
+                            }
                         }
                     }
                 });
@@ -103,7 +107,11 @@ public class WorkoutAdapter extends BaseAdapter {
                         final EditText Caption = (EditText) v;
                         if (!hasFocus && !Caption.getText().toString().equals("")) {
                             final int position = v.getId();
+                            try {
                             exercises.get(position).NumReps = Integer.parseInt(Caption.getText().toString());
+                            }catch (IndexOutOfBoundsException e){
+                                System.out.println("suka");
+                            }
                         }
                     }
                 });
@@ -112,7 +120,11 @@ public class WorkoutAdapter extends BaseAdapter {
                         final EditText Caption = (EditText) v;
                         if (!hasFocus && !Caption.getText().toString().equals("")) {
                             final int position = v.getId();
+                            try {
                             exercises.get(position).NumSets = Integer.parseInt(Caption.getText().toString());
+                            }catch (IndexOutOfBoundsException e){
+                                System.out.println("suka");
+                            }
                         }
                     }
                 });
@@ -121,8 +133,11 @@ public class WorkoutAdapter extends BaseAdapter {
                         final EditText Caption = (EditText) v;
                         if (!hasFocus && !Caption.getText().toString().equals("")) {
                             final int position = v.getId();
-
+                            try {
                             exercises.get(position).restime = Integer.parseInt(Caption.getText().toString());
+                            }catch (IndexOutOfBoundsException e){
+                                System.out.println("suka");
+                            }
                         }
                     }
                 });
@@ -160,7 +175,12 @@ public class WorkoutAdapter extends BaseAdapter {
                         final EditText Caption = (EditText) v;
                         if (!hasFocus && !Caption.getText().toString().equals("")) {
                             final int position = v.getId();
-                            exercises.get(position).nameExercise = Caption.getText().toString();
+                            try {
+                                exercises.get(position).nameExercise = Caption.getText().toString();
+                            }catch (IndexOutOfBoundsException e){
+                                System.out.println("suka");
+                            }
+
                         }
                     }
                 });

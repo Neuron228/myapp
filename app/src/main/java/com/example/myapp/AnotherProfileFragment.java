@@ -11,9 +11,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -47,6 +49,7 @@ public class AnotherProfileFragment extends Fragment {
     static String email;
     static String Nickname;
     static String name;
+
     static int NumOfPublications;
     public static ArrayList<String> publications = new ArrayList<String>();
 
@@ -91,11 +94,15 @@ public class AnotherProfileFragment extends Fragment {
         PublicationsList = view.findViewById(R.id.YourPublications);
         Bundle bundle = getArguments();
         String UIDOfUserSelected = bundle.getString("UID");
+        String URIOfUserSelected = bundle.getString("URI");
 
+        ImageView profilePic = view.findViewById(R.id.imageView2);
         TextView Profile = view.findViewById(R.id.Profile);
         Profile.setTypeface(typeface);
         TextView DisplayName = view.findViewById(R.id.DisplayName);
         DisplayName.setTypeface(typeface1);
+
+
 
         database = FirebaseDatabase.getInstance();
         mDatabase = database.getReference("User");
@@ -110,6 +117,7 @@ public class AnotherProfileFragment extends Fragment {
                         int n =0;
                         DisplayName.setText(ds.child("firstName").getValue(String.class) +" "+ ds.child("lastName").getValue(String.class));
                         NumOfPublications = ds.child("numOfPublications").getValue(Integer.class);
+                        Glide.with(getContext()).load(URIOfUserSelected).into(profilePic);
                         publications.clear();
                         while (n < NumOfPublications && publications.size() != NumOfPublications+1) {
                             if(ds.child("publications").child("publication" + String.valueOf(n)).getValue(String.class) != null) {

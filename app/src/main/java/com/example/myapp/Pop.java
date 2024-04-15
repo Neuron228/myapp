@@ -23,6 +23,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.OkHttpClient;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -49,6 +54,7 @@ public class Pop extends Activity {
          database = FirebaseDatabase.getInstance();
          mDatabase = database.getReference("Workouts");
 
+
         Bundle arguments = getIntent().getExtras();
         int PositionOfWorkout = arguments.getInt("NamePosition");
 
@@ -61,7 +67,7 @@ public class Pop extends Activity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 UsersList.clear();
                 for (DataSnapshot ds : snapshot.getChildren()) {
-                    ApplicationAccount account = new ApplicationAccount(ds.child("firstName").getValue(String.class), ds.child("lastName").getValue(String.class), ds.child("nickname").getValue(String.class), ds.child("UID").getValue(String.class));
+                    ApplicationAccount account = new ApplicationAccount(ds.child("firstName").getValue(String.class), ds.child("lastName").getValue(String.class), ds.child("nickname").getValue(String.class), ds.child("UID").getValue(String.class),ds.child("pictureUri").getValue(String.class));
                     if (!account.getUid().equals(fUser.getUid())) {
 
                         UsersList.add(account);
@@ -110,6 +116,7 @@ public class Pop extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ApplicationAccount PickedUser = UsersList.get(position);
                 mDatabase.child(MainActivity.IDlist.get(PositionOfWorkout)).child("AnotherUsersOfWorkout").child(PickedUser.getUid()).setValue(PickedUser.getUid());
+
                 onBackPressed();
             }
         });
@@ -117,6 +124,10 @@ public class Pop extends Activity {
 
 
 
+
+    }
+
+    private void sendNotification(String fromUserID,String toUserID){
 
     }
     private void filterList(String text){

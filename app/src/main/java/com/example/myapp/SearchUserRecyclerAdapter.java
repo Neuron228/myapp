@@ -15,8 +15,14 @@ import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class SearchUserRecyclerAdapter extends BaseAdapter {
@@ -24,10 +30,12 @@ public class SearchUserRecyclerAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     ArrayList<ApplicationAccount> UsersList;
     int resource;
+    Context context;
 
 
 
     public SearchUserRecyclerAdapter(Context context,int resource ,ArrayList<ApplicationAccount> UsersList) {
+        this.context = context;
         this.resource = resource;
         this.inflater = LayoutInflater.from(context);
         this.UsersList = UsersList;
@@ -64,6 +72,8 @@ public class SearchUserRecyclerAdapter extends BaseAdapter {
         Typeface typeface = ResourcesCompat.getFont(convertView.getContext(), R.font.nunito_extrabold);
         Typeface typeface1 = ResourcesCompat.getFont(convertView.getContext(), R.font.nunito_bold_italic);
 
+        Glide.with(convertView).load(User.getPictureUri()).into(viewHolder.profilePic);
+
         viewHolder.nickNameText.setTypeface(typeface);
         viewHolder.usernameText.setTypeface(typeface1);
         viewHolder.nickNameText.setText("@"+User.getNickname());
@@ -78,7 +88,7 @@ public class SearchUserRecyclerAdapter extends BaseAdapter {
     class UserModelViewHolder extends RecyclerView.ViewHolder{
         TextView usernameText;
         TextView nickNameText;
-        ImageView profilePic;
+        CircleImageView profilePic;
 
         public UserModelViewHolder(@NonNull View itemView) {
             super(itemView);

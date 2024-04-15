@@ -10,15 +10,20 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
 
+import com.bumptech.glide.Glide;
 import com.example.myapp.databinding.ActivityMainBinding;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,6 +32,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,6 +46,7 @@ public class MainActivity extends FragmentActivity {
     DatabaseReference mDatabase;
     DatabaseReference mDatabaseW;
 
+
     static String email;
     static String Nickname;
     private Fragment fragment = null;
@@ -48,6 +57,7 @@ public class MainActivity extends FragmentActivity {
 
     static String profilePicUri;
     static ArrayList<String> items = new ArrayList<>();
+    public static Uri ProfileUriPic;
 
     static int NumOfWorkouts;
 
@@ -58,7 +68,7 @@ public class MainActivity extends FragmentActivity {
 
     public static ArrayList<String> IDlist = new ArrayList<String>();
 
-
+    private StorageReference storageReference;
     public static ArrayList<ArrayList<Workout>> ALLUserWorkouts = new ArrayList<>();
 
     @Override
@@ -78,11 +88,11 @@ public class MainActivity extends FragmentActivity {
         mDatabaseW = database.getReference("Workouts");
         user = FirebaseAuth.getInstance().getCurrentUser();
 
+        FirebaseStorage storage = FirebaseStorage.getInstance();
 
         Intent intent = getIntent();
         email = intent.getStringExtra("email");
-
-
+        
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -93,6 +103,20 @@ public class MainActivity extends FragmentActivity {
                         NumOfPublications = ds.child("numOfPublications").getValue(Integer.class);
                         NumOfWorkouts = ds.child("NumOfWorkouts").getValue(Integer.class);
                         profilePicUri = ds.child("pictureUri").getValue(String.class);
+                        storageReference = storage.getReferenceFromUrl(MainActivity.profilePicUri);
+
+                        storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                ProfileUriPic = uri;
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                // Handle any errors
+                            }
+                        });
+                        System.out.println(profilePicUri);
                         publications.clear();
                         while (n < NumOfPublications && publications.size() != NumOfPublications + 1) {
                             if (ds.child("publications").child("publication" + String.valueOf(n)).getValue(String.class) != null) {
@@ -214,6 +238,17 @@ public class MainActivity extends FragmentActivity {
             return true;
         });
 
+        getFCMToken();
+    }
+
+    void getFCMToken(){
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
+            if (task.isSuccessful()){
+                String token = task.getResult();
+                Log.i("My token", token);
+            }
+
+        });
     }
 
     private void replaceFragment(Fragment fragment){
