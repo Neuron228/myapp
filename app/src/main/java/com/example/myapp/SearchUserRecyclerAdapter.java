@@ -16,6 +16,8 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.myapp.ApplicationAccount;
+import com.example.myapp.R;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;

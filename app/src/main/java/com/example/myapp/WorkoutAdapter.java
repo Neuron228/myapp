@@ -1,7 +1,5 @@
 package com.example.myapp;
 
-import static java.security.AccessController.getContext;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -189,7 +186,11 @@ public class WorkoutAdapter extends BaseAdapter {
                         final EditText Caption = (EditText) v;
                         if (!hasFocus && !Caption.getText().toString().equals("")) {
                             final int position = v.getId();
+                            try {
                             exercises.get(position).Time = Integer.parseInt(Caption.getText().toString());
+                        }catch (IndexOutOfBoundsException e){
+                            System.out.println("suka");
+                        }
                         }
                     }
                 });
@@ -198,10 +199,18 @@ public class WorkoutAdapter extends BaseAdapter {
                     public void onCheckedChanged(RadioGroup arg0, int id) {
                         switch(id) {
                             case R.id.radio_sec:
+                                try {
                                 exercises.get(position).timeType = "sec";
+                                }catch (IndexOutOfBoundsException e){
+                                    System.out.println("suka");
+                                }
                                 break;
                             case R.id.radio_min:
+                                try {
                                 exercises.get(position).timeType = "min";
+                                }catch (IndexOutOfBoundsException e){
+                                    System.out.println("suka");
+                                }
                                 break;
                             default:
                                 break;

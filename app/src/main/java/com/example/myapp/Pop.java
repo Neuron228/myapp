@@ -1,17 +1,12 @@
 package com.example.myapp;
 
-import static java.security.AccessController.getContext;
-
 import android.app.Activity;
-import android.database.MatrixCursor;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,13 +18,20 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.OkHttpClient;
 
-import org.json.JSONException;
+
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class Pop extends Activity {
 
@@ -39,6 +41,7 @@ public class Pop extends Activity {
     FirebaseDatabase database;
     DatabaseReference mDatabase;
     SearchUserRecyclerAdapter adapter;
+    String WorkoutName;
 
     public ArrayList<ApplicationAccount> UsersList = new ArrayList<>();
 
@@ -57,6 +60,7 @@ public class Pop extends Activity {
 
         Bundle arguments = getIntent().getExtras();
         int PositionOfWorkout = arguments.getInt("NamePosition");
+        WorkoutName = arguments.getString("WorkoutName");
 
 
         FirebaseUser fUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -67,7 +71,7 @@ public class Pop extends Activity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 UsersList.clear();
                 for (DataSnapshot ds : snapshot.getChildren()) {
-                    ApplicationAccount account = new ApplicationAccount(ds.child("firstName").getValue(String.class), ds.child("lastName").getValue(String.class), ds.child("nickname").getValue(String.class), ds.child("UID").getValue(String.class),ds.child("pictureUri").getValue(String.class));
+                    ApplicationAccount account = new ApplicationAccount(ds.child("firstName").getValue(String.class), ds.child("lastName").getValue(String.class),ds.child("email").getValue(String.class) ,ds.child("nickname").getValue(String.class), ds.child("UID").getValue(String.class),ds.child("pictureUri").getValue(String.class),ds.child("FCMToken").getValue(String.class));
                     if (!account.getUid().equals(fUser.getUid())) {
 
                         UsersList.add(account);
@@ -116,7 +120,7 @@ public class Pop extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ApplicationAccount PickedUser = UsersList.get(position);
                 mDatabase.child(MainActivity.IDlist.get(PositionOfWorkout)).child("AnotherUsersOfWorkout").child(PickedUser.getUid()).setValue(PickedUser.getUid());
-
+                sendNotification(PickedUser);
                 onBackPressed();
             }
         });
@@ -127,9 +131,52 @@ public class Pop extends Activity {
 
     }
 
-    private void sendNotification(String fromUserID,String toUserID){
+    private void sendNotification(ApplicationAccount PickedUser){
 
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        try {
+            JSONObject jsonObject = new JSONObject();
+
+            JSONObject notificationObj = new JSONObject();
+            notificationObj.put("title","GymGrid");
+            notificationObj.put("body",MainActivity.Username + " sent you workout: "+WorkoutName);
+
+            JSONObject dataObj = new JSONObject();
+            dataObj.put("userId",user.getUid());
+
+            jsonObject.put("notification",notificationObj);
+            jsonObject.put("data",dataObj);
+            jsonObject.put("to",PickedUser.getFCMToken());
+
+            callApi(jsonObject);
+        }catch (Exception e){
+
+        }
     }
+    void callApi(JSONObject jsonObject){
+        MediaType JSON = MediaType.get("application/json");
+        OkHttpClient client = new OkHttpClient();
+        String url = "https://fcm.googleapis.com/fcm/send";
+        RequestBody body = RequestBody.create(jsonObject.toString(),JSON);
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .header("Authorization","Bearer AAAA2zOFFzo:APA91bFKcg23WPYwETdON5yQY3se3O_BPh69ZU5lViqymHhbUytYuRJ-u7qvGe2mHHMefPfc_pgUbhiHCyYejZap8k2wPoaqhrGFuWiAY9S_HGT2TAeWT94Xc20GTbg2jLXaK7twQBuK")
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+
+            }
+        });
+    }
+
     private void filterList(String text){
         ArrayList<ApplicationAccount> UsersListFiltered = new ArrayList<>();
         for (ApplicationAccount item : UsersList){

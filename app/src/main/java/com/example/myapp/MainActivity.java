@@ -1,15 +1,23 @@
 package com.example.myapp;
 
 
+import static android.Manifest.permission.POST_NOTIFICATIONS;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -50,7 +58,7 @@ public class MainActivity extends FragmentActivity {
     static String email;
     static String Nickname;
     private Fragment fragment = null;
-    static String Username;
+    public static String Username;
     public static FirebaseUser user ;
     static int NumForID;
     static int NumOfPublications;
@@ -79,7 +87,9 @@ public class MainActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        if (ContextCompat.checkSelfPermission(this, POST_NOTIFICATIONS) == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(this, new String[]{POST_NOTIFICATIONS}, 1);
+        }
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -89,22 +99,33 @@ public class MainActivity extends FragmentActivity {
         user = FirebaseAuth.getInstance().getCurrentUser();
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
+        System.out.println(user.getIdToken(true));
 
         Intent intent = getIntent();
         email = intent.getStringExtra("email");
-        
+        // Declare the launcher at the top of your Activity/Fragment:
+
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     if (ds.child("email").getValue().equals(MainActivity.email)) {
                         int n = 0;
+                        Nickname = ds.child("nickname").getValue(String.class);
                         Username = ds.child("firstName").getValue(String.class) + " " + ds.child("lastName").getValue(String.class);
                         NumOfPublications = ds.child("numOfPublications").getValue(Integer.class);
                         NumOfWorkouts = ds.child("NumOfWorkouts").getValue(Integer.class);
                         profilePicUri = ds.child("pictureUri").getValue(String.class);
                         storageReference = storage.getReferenceFromUrl(MainActivity.profilePicUri);
+                        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
+                            if (task.isSuccessful()){
+                                String token = task.getResult();
+                                if(!ds.child("FCMToken").exists() || !ds.child("FCMToken").getValue(String.class).equals(token)){
+                                    mDatabase.child(Nickname).child("FCMToken").setValue(token);
+                                }
+                            }
 
+                        });
                         storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
@@ -125,7 +146,7 @@ public class MainActivity extends FragmentActivity {
                                 n++;
                             }
                         }
-                        Nickname = ds.child("nickname").getValue(String.class);
+
 
                     }
                 }
@@ -137,6 +158,7 @@ public class MainActivity extends FragmentActivity {
 
             }
         });
+
 
         mDatabaseW.addValueEventListener(new ValueEventListener() {
             @Override
@@ -223,9 +245,6 @@ public class MainActivity extends FragmentActivity {
                 case R.id.Account:
                     replaceFragment(new ProfileFragment());
                     break;
-                case R.id.Home:
-
-                    break;
                 case R.id.Search:
                     replaceFragment(new SearchFragment());
                     break;
@@ -237,19 +256,9 @@ public class MainActivity extends FragmentActivity {
 
             return true;
         });
-
-        getFCMToken();
     }
 
-    void getFCMToken(){
-        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
-            if (task.isSuccessful()){
-                String token = task.getResult();
-                Log.i("My token", token);
-            }
 
-        });
-    }
 
     private void replaceFragment(Fragment fragment){
 

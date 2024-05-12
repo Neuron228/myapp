@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Training App</string>
+    <string name="app_name">GymGrid</string>
     <string name="first_name">My Workouts</string>
     <string name="new_workout">New Workout</string>
     <string name="save">Save</string>
@@ -14,5 +14,7 @@
     <string name="UserName">User name:</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="default_notification_channel_id">com.domain.appname.urgent</string>
+    <string name="default_notification_channel_id">com.domain.myapp.urgent</string>
+    <string name="default_notification_channel_name">Channel1</string>
+    <string name="default_notification_channel_description">channel</string>
 </resources>

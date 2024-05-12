@@ -7,10 +7,6 @@
         android:title="Account"
         android:icon="@drawable/account" />
     <item
-        android:id="@+id/Home"
-        android:title="Home"
-        android:icon="@drawable/pngwing_com__5_"/>
-    <item
         android:id="@+id/Search"
         android:title="Search"
         android:icon="@drawable/pngwing_com__3_"/>

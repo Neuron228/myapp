@@ -13,6 +13,7 @@ public class ApplicationAccount {
      private String Password;
      private String Nickname;
 
+     private String FCMToken;
      private String pictureUri;
      private String uid;
      private int NumOfPublications;
@@ -22,24 +23,42 @@ public class ApplicationAccount {
           this.Password = Password;
           this.NumOfPublications = 0;
      }
-     public ApplicationAccount(String FirstName, String LastName,String Nickname,String uid,String pictureUri){
+     public ApplicationAccount(String FirstName, String LastName,String email,String Nickname,String uid,String pictureUri,String FCMToken){
           this.FirstName = FirstName;
           this.LastName =LastName;
           this.Nickname = Nickname;
+          this.Email = email;
           this.uid = uid;
           this.pictureUri = pictureUri;
-
+          this.FCMToken = FCMToken;
      }
 
-     public ApplicationAccount(String FirstName, String LastName, String Email, String Password,String Nickname,String pictureUri ){
-          this.FirstName = FirstName;
-          this.LastName =LastName;
-          this.Email =Email;
-          this.Password = Password;
-          this.Nickname = Nickname;
-          this.NumOfPublications = 0;
-          this.pictureUri = pictureUri;
 
+
+     public ApplicationAccount(String firstNameText, String lastNameText, String emailText, String passwordText, String nickNameText, String Uri) {
+          this.FirstName = firstNameText;
+          this.LastName =lastNameText;
+          this.Email =emailText;
+          this.Password = passwordText;
+          this.Nickname = nickNameText;
+          this.NumOfPublications = 0;
+          this.pictureUri = Uri;
+     }
+     public ApplicationAccount(String firstNameText, String lastNameText, String nickNameText,String uid, String Uri) {
+          this.FirstName = firstNameText;
+          this.LastName =lastNameText;
+          this.Nickname = nickNameText;
+          this.NumOfPublications = 0;
+          this.uid = uid;
+          this.pictureUri = Uri;
+     }
+
+     public String getFCMToken() {
+          return FCMToken;
+     }
+
+     public void setFCMToken(String FCMToken) {
+          this.FCMToken = FCMToken;
      }
 
      public String getPictureUri() {
